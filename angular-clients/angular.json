@@ -1,0 +1,193 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": ".",
+  "projects": {
+    "ionic-bar": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "ionic-bar",
+      "sourceRoot": "ionic-bar/src",
+      "prefix": "bar",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/ionic-bar",
+            "index": "ionic-bar/src/index.html",
+            "main": "ionic-bar/src/main.ts",
+            "polyfills": "ionic-bar/src/polyfills.ts",
+            "tsConfig": "ionic-bar/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "ionic-bar/src/silent-renew.html",
+              "ionic-bar/src/favicon.ico",
+              "ionic-bar/src/assets",
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              }
+            ],
+            "styles": [
+              "ionic-bar/src/styles.css",
+              {
+                "input": "node_modules/@ionic/angular/css/normalize.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/structure.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/typography.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/core.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/padding.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/float-elements.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/text-alignment.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/text-transformation.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/flex-utils.css"
+              },
+              {
+                "input": "ionic-bar/src/theme/variables.css"
+              }
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "ch4mpy": {
+              "fileReplacements": [
+                {
+                  "replace": "ionic-bar/src/environments/environment.ts",
+                  "with": "ionic-bar/src/environments/environment.ch4mpy.ts"
+                }
+              ]
+            },
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "ionic-bar/src/environments/environment.ts",
+                  "with": "ionic-bar/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ionic-bar:build"
+          },
+          "configurations": {
+            "ch4mpy": {
+              "browserTarget": "ionic-bar:build:ch4mpy"
+            },
+            "production": {
+              "browserTarget": "ionic-bar:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ionic-bar:build"
+          }
+        },
+        "ionic-cordova-serve": {
+          "builder": "@ionic/angular-toolkit:cordova-serve",
+          "options": {
+            "cordovaBuildTarget": "ionic-bar:ionic-cordova-build",
+            "devServerTarget": "ionic-bar:serve"
+          },
+          "configurations": {
+            "ch4mpy": {
+              "cordovaBuildTarget": "ionic-bar:ionic-cordova-build:ch4mpy",
+              "devServerTarget": "ionic-bar:serve:ch4mpy"
+            },
+            "production": {
+              "cordovaBuildTarget": "ionic-bar:ionic-cordova-build:production",
+              "devServerTarget": "ionic-bar:serve:production"
+            }
+          }
+        },
+        "ionic-cordova-build": {
+          "builder": "@ionic/angular-toolkit:cordova-build",
+          "options": {
+            "browserTarget": "ionic-bar:build"
+          },
+          "configurations": {
+            "ch4mpy": {
+              "browserTarget": "ionic-bar:build:ch4mpy"
+            },
+            "production": {
+              "browserTarget": "ionic-bar:build:production"
+            }
+          }
+        }
+      }
+    },
+    "@tahiti-devops/bar-api": {
+      "projectType": "library",
+      "root": "libs/tahiti-devops/bar-api",
+      "sourceRoot": "libs/tahiti-devops/bar-api/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "libs/tahiti-devops/bar-api/tsconfig.lib.json",
+            "project": "libs/tahiti-devops/bar-api/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/tahiti-devops/bar-api/tsconfig.lib.prod.json"
+            }
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ionic-bar",
+  "cli": {
+    "defaultCollection": "@ionic/angular-toolkit",
+    "analytics": false
+  },
+  "schematics": {
+    "@ionic/angular-toolkit:component": {
+      "styleext": "scss"
+    },
+    "@ionic/angular-toolkit:page": {
+      "styleext": "scss"
+    }
+  }
+}

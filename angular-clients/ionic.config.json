@@ -1,0 +1,13 @@
+{
+  "projects": {
+    "ionic-bar": {
+      "name": "ionic-bar",
+      "integrations": {
+        "capacitor": {}
+      },
+      "type": "angular",
+      "root": "ionic-bar"
+    }
+  },
+  "defaultProject": "ionic-bar"
+}

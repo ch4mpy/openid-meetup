@@ -1,0 +1,16 @@
+{
+  "name": "ionic-bar",
+  "version": "0.0.0",
+  "description": "app to order drinks",
+  "author": "ch4mp@c4-soft.com",
+  "dependencies": {
+    "@capacitor/android": "^2.4.0",
+    "@capacitor/core": "2.4.0",
+    "@ionic-native/core": "^5.27.0",
+    "@ionic-native/deeplinks": "^5.27.0",
+    "ionic-plugin-deeplinks": "^1.0.20"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "2.4.0"
+  }
+}

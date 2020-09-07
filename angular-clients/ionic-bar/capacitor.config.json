@@ -1,0 +1,13 @@
+{
+  "appId": "com.c4soft.openapimeetup.ionicbar",
+  "appName": "ionic-bar",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "../dist/ionic-bar",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}
