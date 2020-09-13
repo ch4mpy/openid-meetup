@@ -11,6 +11,7 @@
     "ionic-plugin-deeplinks": "^1.0.20"
   },
   "devDependencies": {
-    "@capacitor/cli": "2.4.0"
+    "@capacitor/cli": "2.4.0",
+    "@ionic/lab": "3.2.7"
   }
 }

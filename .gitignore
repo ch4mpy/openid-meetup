@@ -42,3 +42,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Self-signed certificate files
+*_self_signed*
