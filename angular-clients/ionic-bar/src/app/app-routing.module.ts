@@ -19,6 +19,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./orders/orders.module').then((m) => m.OrdersModule),
   },
+  {
+    path: '**',
+    redirectTo: 'settings',
+  },
 ];
 
 @NgModule({

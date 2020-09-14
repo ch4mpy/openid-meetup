@@ -1,7 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { KeycloakUser } from './domain/keycloak-user';
 
 @Injectable({ providedIn: 'root' })
@@ -9,31 +8,35 @@ export class UaaService implements OnDestroy {
   private user$ = new BehaviorSubject<KeycloakUser>(KeycloakUser.ANONYMOUS);
   private userdataSubscription: Subscription;
 
-  constructor(private oidcSecurityService: OidcSecurityService) {
-    this.userdataSubscription = this.oidcSecurityService.userData$
-      .pipe(
-        map(
-          (oidcUser: any): KeycloakUser => {
-            return oidcUser?.sub
-              ? new KeycloakUser({
-                  sub: oidcUser.sub,
-                  email: oidcUser.email,
-                  preferredUsername: oidcUser.preferred_username,
-                  roles:
-                    this.oidcSecurityService.getPayloadFromIdToken()
-                      ?.resource_access?.['tahiti-devops']?.roles || [],
-                })
-              : KeycloakUser.ANONYMOUS;
-          }
-        )
-      )
-      .subscribe((user: KeycloakUser) => this.user$.next(user));
+  constructor(private oidcSecurityService: OidcSecurityService) {}
 
-    this.oidcSecurityService
+  public async init(): Promise<boolean> {
+    const isAlreadyAuthenticated = await this.oidcSecurityService
       .checkAuthIncludingServer()
-      .subscribe((isAuthenticated) =>
-        console.log('Keycloak user authenicated: ', isAuthenticated)
-      );
+      .toPromise();
+
+    console.log(
+      'UaaService::init isAlreadyAuthenticated',
+      isAlreadyAuthenticated
+    );
+
+    this.userdataSubscription = this.oidcSecurityService.userData$.subscribe(
+      (oidcUser: any) => {
+        const keycloakUser = oidcUser?.sub
+          ? new KeycloakUser({
+              sub: oidcUser.sub,
+              email: oidcUser.email,
+              preferredUsername: oidcUser.preferred_username,
+              roles:
+                this.oidcSecurityService.getPayloadFromIdToken()
+                  ?.resource_access?.['tahiti-devops']?.roles || [],
+            })
+          : KeycloakUser.ANONYMOUS;
+        this.user$.next(keycloakUser);
+      }
+    );
+
+    return isAlreadyAuthenticated;
   }
 
   public ngOnDestroy() {
@@ -41,11 +44,7 @@ export class UaaService implements OnDestroy {
   }
 
   get currentUser$(): Observable<KeycloakUser> {
-    return this.user$.asObservable();
-  }
-
-  get isAuthenticated$(): Observable<boolean> {
-    return this.oidcSecurityService.isAuthenticated$;
+    return this.user$;
   }
 
   public login(): void {

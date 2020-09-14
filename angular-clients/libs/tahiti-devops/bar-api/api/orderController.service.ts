@@ -31,7 +31,7 @@ import { Configuration }                                     from '../configurat
 })
 export class OrderControllerRestClient {
 
-    protected basePath = 'http://192.168.8.100:9080';
+    protected basePath = 'https://laptop-jerem:9080';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;

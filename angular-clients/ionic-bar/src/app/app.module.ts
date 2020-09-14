@@ -12,33 +12,20 @@ import {
   ApiModule as BarApi,
   OrderControllerRestClient,
 } from '@tahiti-devops/bar-api';
-import {
-  AuthModule,
-  LogLevel,
-  OidcConfigService,
-} from 'angular-auth-oidc-client';
+import { AuthModule, OidcConfigService } from 'angular-auth-oidc-client';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthorizationHeaderHttpInterceptor } from './authorization-header.http-interceptor';
+import { UaaService } from './uaa.service';
 
-export function configureAuth(oidcConfigService: OidcConfigService) {
-  return () => {
+export function configureAuth(
+  oidcConfigService: OidcConfigService,
+  uaa: UaaService
+) {
+  return async () => {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
-    oidcConfigService.withConfig({
-      clientId: 'tahiti-devops',
-      forbiddenRoute: environment.forbiddenRoute,
-      logLevel: LogLevel.Warn,
-      postLogoutRedirectUri: environment.postLogoutRedirectUri,
-      redirectUrl: environment.redirectUrl,
-      renewTimeBeforeTokenExpiresInSeconds: 10,
-      responseType: 'code',
-      scope: 'email openid offline_access roles',
-      silentRenew: true,
-      silentRenewUrl: `${window.location.origin}/silent-renew.html`,
-      stsServer: environment.stsServer,
-      unauthorizedRoute: environment.unauthorizedRoute,
-    });
+    await oidcConfigService.withConfig(environment.openIdConfiguration);
   };
 }
 
@@ -57,7 +44,7 @@ export function configureAuth(oidcConfigService: OidcConfigService) {
     {
       provide: APP_INITIALIZER,
       useFactory: configureAuth,
-      deps: [OidcConfigService],
+      deps: [OidcConfigService, UaaService],
       multi: true,
     },
     {

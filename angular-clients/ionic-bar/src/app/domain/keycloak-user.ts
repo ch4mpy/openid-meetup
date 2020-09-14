@@ -8,8 +8,12 @@ export class KeycloakUser {
     Object.assign(this, init);
   }
 
-  isBarman() {
-    return this.roles.includes('barman');
+  isAuthenticated(): boolean {
+    return !!this.sub;
+  }
+
+  isBarman(): boolean {
+    return this.roles.includes('BARMAN');
   }
 
   static readonly ANONYMOUS = new KeycloakUser({});

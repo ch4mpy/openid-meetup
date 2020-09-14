@@ -45,7 +45,7 @@ import { OrderEditComponent } from './order-edit.component';
   styles: [],
 })
 export class OrdersPage implements OnInit {
-  orders: Order[];
+  orders: Order[] = [];
 
   constructor(
     private orderApi: OrderControllerRestClient,

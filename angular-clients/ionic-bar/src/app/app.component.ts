@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { NavController, Platform } from '@ionic/angular';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { KeycloakUser } from './domain/keycloak-user';
 import { UaaService } from './uaa.service';
 
@@ -17,14 +17,14 @@ import { UaaService } from './uaa.service';
               <ion-row>
                 <ion-col size="8">
                   <ion-title>
-                    {{ (currentUser$ | async)?.preferredUsername }}
+                    {{ currentUser?.preferredUsername }}
                   </ion-title>
                 </ion-col>
                 <ion-col size="4">
                   <ion-icon
                     name="wine-sharp"
                     size="large"
-                    *ngIf="(currentUser$ | async)?.isBarman()"
+                    *ngIf="currentUser?.isBarman()"
                   ></ion-icon>
                 </ion-col>
               </ion-row>
@@ -39,7 +39,7 @@ import { UaaService } from './uaa.service';
               lines="none"
               [class.selected]="selected === 'orders'"
               class="ion-button"
-              *ngIf="isAuthenticated$ | async"
+              *ngIf="currentUser?.isAuthenticated()"
             >
               <ion-icon slot="start" name="beer-sharp"></ion-icon>
               <ion-label>Commandes</ion-label>
@@ -58,7 +58,7 @@ import { UaaService } from './uaa.service';
               (click)="login()"
               lines="none"
               class="ion-button"
-              *ngIf="!(isAuthenticated$ | async)"
+              *ngIf="!currentUser?.isAuthenticated()"
             >
               <ion-icon slot="start" name="log-in-outline"></ion-icon>
               <ion-label>Identification</ion-label>
@@ -67,7 +67,7 @@ import { UaaService } from './uaa.service';
               (click)="logout()"
               lines="none"
               class="ion-button"
-              *ngIf="isAuthenticated$ | async"
+              *ngIf="currentUser?.isAuthenticated()"
             >
               <ion-icon slot="start" name="log-out-outline"></ion-icon>
               <ion-label>Déconnexion</ion-label>
@@ -82,9 +82,8 @@ import { UaaService } from './uaa.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   selected = '';
-  currentUser$: Observable<KeycloakUser>;
-  isAuthenticated$: Observable<boolean>;
-  isBarman$: Observable<boolean>;
+  currentUser: KeycloakUser;
+  isBarman: boolean;
 
   private deeplinksRouteSubscription: Subscription;
 
@@ -92,22 +91,22 @@ export class AppComponent implements OnInit, OnDestroy {
     private deeplinks: Deeplinks,
     private navController: NavController,
     private platform: Platform,
-    private uaa: UaaService
+    private uaa: UaaService,
+    private changedetector: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
-    this.platform.ready().then(async () => {
-      this.currentUser$ = this.uaa.currentUser$;
-      this.isAuthenticated$ = this.uaa.isAuthenticated$;
+  async ngOnInit() {
+    await this.platform.ready();
+    console.log('PLATFORMS: ' + this.platform.platforms());
 
-      console.log('PLATFORMS: ' + this.platform.platforms());
-      if (this.platform.is('capacitor')) {
-        this.setupDeeplinks();
-        const { SplashScreen, StatusBar } = Plugins;
-        StatusBar.setStyle({ style: StatusBarStyle.Light });
-        SplashScreen.hide();
-      }
-    });
+    if (this.platform.is('capacitor')) {
+      this.setupDeeplinks();
+      const { SplashScreen, StatusBar } = Plugins;
+      StatusBar.setStyle({ style: StatusBarStyle.Light });
+      SplashScreen.hide();
+    }
+
+    await this.initUaa();
   }
 
   ngOnDestroy() {
@@ -123,18 +122,27 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private setupDeeplinks() {
-    this.deeplinksRouteSubscription = this.deeplinks
-      .routeWithNavController(this.navController, {})
-      .subscribe(
-        (match) => {
-          const callbackUrl = match.$link.path + '?' + match.$link.queryString;
-        },
-        (nomatch) => {
-          console.error(
-            "Got a deeplink that didn't match",
-            JSON.stringify(nomatch)
-          );
-        }
-      );
+    this.deeplinks.routeWithNavController(this.navController, {}).subscribe(
+      (match) =>
+        this.navController
+          .navigateForward(match.$link.path + '?' + match.$link.queryString)
+          .then(async () => await this.initUaa()),
+      (nomatch) =>
+        console.error(
+          "Got a deeplink that didn't match",
+          JSON.stringify(nomatch)
+        )
+    );
+  }
+
+  private async initUaa(): Promise<void> {
+    await this.uaa.init();
+
+    this.uaa.currentUser$.subscribe((u) => {
+      if (this.currentUser !== u) {
+        this.currentUser = u;
+        this.changedetector.detectChanges();
+      }
+    });
   }
 }

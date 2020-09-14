@@ -65,11 +65,11 @@
             "scripts": []
           },
           "configurations": {
-            "ch4mpy": {
+            "laptop-jerem": {
               "fileReplacements": [
                 {
                   "replace": "ionic-bar/src/environments/environment.ts",
-                  "with": "ionic-bar/src/environments/environment.ch4mpy.ts"
+                  "with": "ionic-bar/src/environments/environment.laptop-jerem.ts"
                 }
               ]
             },
@@ -113,8 +113,8 @@
             "sslKey": "./laptop-jerem_self_signed_key.pem"
           },
           "configurations": {
-            "ch4mpy": {
-              "browserTarget": "ionic-bar:build:ch4mpy"
+            "laptop-jerem": {
+              "browserTarget": "ionic-bar:build:laptop-jerem"
             },
             "production": {
               "browserTarget": "ionic-bar:build:production"
@@ -134,9 +134,9 @@
             "devServerTarget": "ionic-bar:serve"
           },
           "configurations": {
-            "ch4mpy": {
-              "cordovaBuildTarget": "ionic-bar:ionic-cordova-build:ch4mpy",
-              "devServerTarget": "ionic-bar:serve:ch4mpy"
+            "laptop-jerem": {
+              "cordovaBuildTarget": "ionic-bar:ionic-cordova-build:laptop-jerem",
+              "devServerTarget": "ionic-bar:serve:laptop-jerem"
             },
             "production": {
               "cordovaBuildTarget": "ionic-bar:ionic-cordova-build:production",
@@ -150,8 +150,8 @@
             "browserTarget": "ionic-bar:build"
           },
           "configurations": {
-            "ch4mpy": {
-              "browserTarget": "ionic-bar:build:ch4mpy"
+            "laptop-jerem": {
+              "browserTarget": "ionic-bar:build:laptop-jerem"
             },
             "production": {
               "browserTarget": "ionic-bar:build:production"

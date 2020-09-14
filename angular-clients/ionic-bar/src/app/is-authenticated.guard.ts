@@ -25,7 +25,9 @@ export class IsAuthenticatedGuard implements CanActivate {
       map((isIdentified) => {
         if (!isIdentified) {
           console.warn(`User is not identified. Access denied to ${route.url}`);
-          this.navCtrl.navigateBack(environment.unauthorizedRoute);
+          this.navCtrl.navigateBack(
+            environment.openIdConfiguration.unauthorizedRoute
+          );
         }
         return isIdentified;
       })

@@ -44,9 +44,9 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 		super.configure(http);
 
 		// @formatter:off
-        http.cors().and()
+        http.anonymous().and()
+        	.cors().and()
     		.csrf().disable()
-        	.anonymous().and()
         	.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 	        .exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
 	            response.addHeader(HttpHeaders.WWW_AUTHENTICATE, "Basic realm=\"Restricted Content\"");
@@ -64,11 +64,7 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/orders/**")
-						.allowedOrigins(
-								"http://localhost:8100",
-								"http://localhost:4200",
-								"http://192.168.8.100:8100",
-								"http://192.168.8.100:4200")
+						.allowedOrigins("http://localhost", "https://laptop-jerem:8100", "https://laptop-jerem:4200")
 						.allowedMethods("*")
 						.exposedHeaders("Origin", "Accept", "Content-Type", "Location");
 			}
