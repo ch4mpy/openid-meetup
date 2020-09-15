@@ -4,6 +4,7 @@ import { PopoverController } from '@ionic/angular';
 import {
   OrderControllerRestClient,
   OrderCreationRequestDto,
+  OrderResponseDto,
 } from '@tahiti-devops/bar-api';
 import { Observable } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
@@ -56,11 +57,10 @@ export class OrdersPage implements OnInit {
     this.orderApi
       .getAll()
       .subscribe(
-        (orders) =>
+        (orders: OrderResponseDto[]) =>
           (this.orders =
-            orders._embedded?.orderResponseDtoes?.map(
-              (dto) => new Order({ id: dto.id, drink: dto.drink })
-            ) || [])
+            orders.map((dto) => new Order({ id: dto.id, drink: dto.drink })) ||
+            [])
       );
   }
 

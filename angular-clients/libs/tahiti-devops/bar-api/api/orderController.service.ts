@@ -17,7 +17,6 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
-import { CollectionModelOrderResponseDto } from '../model/models';
 import { OrderCreationRequestDto } from '../model/models';
 import { OrderResponseDto } from '../model/models';
 
@@ -135,9 +134,9 @@ export class OrderControllerRestClient {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAll(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*'}): Observable<CollectionModelOrderResponseDto>;
-    public getAll(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*'}): Observable<HttpResponse<CollectionModelOrderResponseDto>>;
-    public getAll(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*'}): Observable<HttpEvent<CollectionModelOrderResponseDto>>;
+    public getAll(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*'}): Observable<Array<OrderResponseDto>>;
+    public getAll(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*'}): Observable<HttpResponse<Array<OrderResponseDto>>>;
+    public getAll(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*'}): Observable<HttpEvent<Array<OrderResponseDto>>>;
     public getAll(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: '*/*'}): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -160,7 +159,7 @@ export class OrderControllerRestClient {
             responseType = 'text';
         }
 
-        return this.httpClient.get<CollectionModelOrderResponseDto>(`${this.configuration.basePath}/orders`,
+        return this.httpClient.get<Array<OrderResponseDto>>(`${this.configuration.basePath}/orders`,
             {
                 responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,

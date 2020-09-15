@@ -3,14 +3,16 @@ package com.c4soft.tahitidevops.bar.web;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import javax.validation.Valid;
 
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,54 +32,53 @@ import com.c4soft.tahitidevops.bar.web.error.NotFoundEexception;
 @PreAuthorize("isAuthenticated()")
 public class OrderController {
 
-	private final OrderModelAssembler orderAssembler;
 	private final OrderRepo orderRepo;
 
 	@Autowired
-	public OrderController(OrderModelAssembler orderAssembler, OrderRepo orderRepo) {
-		this.orderAssembler = orderAssembler;
+	public OrderController(OrderRepo orderRepo) {
 		this.orderRepo = orderRepo;
 	}
 
 	@GetMapping
-	public CollectionModel<OrderResponseDto> getAll() {
-		return orderAssembler.toCollectionModel(orderRepo.findAll());
+	public ResponseEntity<List<OrderResponseDto>> getAll() {
+		return ResponseEntity.ok(convert(orderRepo.findAll()));
 	}
 
 	@GetMapping("/{id}")
-	public OrderResponseDto getById(@PathVariable Long id) {
-		return orderAssembler.toModel(orderRepo.findById(id).orElseThrow(NotFoundEexception::new));
+	public ResponseEntity<OrderResponseDto> getById(@PathVariable("id") long id) {
+		final var order = getOrderById(id);
+		return ResponseEntity.ok(convert(order));
 	}
 
 	@PostMapping
-	public ResponseEntity<Long> placeOrder(@Valid @RequestBody OrderCreationRequestDto dto) {
-		final var order = orderRepo.save(new Order(dto.drink));
+	public ResponseEntity<Long>
+			placeOrder(@Valid @RequestBody OrderCreationRequestDto dto, KeycloakAuthenticationToken auth) {
+		final var order = orderRepo
+				.save(new Order(dto.drink, auth.getAccount().getKeycloakSecurityContext().getToken().getSubject()));
+
 		return ResponseEntity
 				.created(linkTo(methodOn(OrderController.class).getById(order.getId())).withSelfRel().toUri())
 				.body(order.getId());
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteById(@PathVariable Long id) {
-		final var order = orderRepo.findById(id).orElseThrow(NotFoundEexception::new);
+	public ResponseEntity<?> deleteById(@PathVariable("id") long id) {
+		final var order = getOrderById(id);
 		orderRepo.delete(order);
 		return ResponseEntity.noContent().build();
 	}
 
-	@Component
-	static class OrderModelAssembler extends RepresentationModelAssemblerSupport<Order, OrderResponseDto> {
-		public OrderModelAssembler() {
-			super(OrderController.class, OrderResponseDto.class);
-		}
+	private Order getOrderById(long id) {
+		return orderRepo.findById(id).orElseThrow(NotFoundEexception::new);
+	}
 
-		@Override
-		protected OrderResponseDto instantiateModel(Order entity) {
-			return new OrderResponseDto(entity.getId(), entity.getDrink());
-		}
+	private static OrderResponseDto convert(Order entity) {
+		return new OrderResponseDto(entity.getId(), entity.getDrink());
+	}
 
-		@Override
-		public OrderResponseDto toModel(Order entity) {
-			return createModelWithId(entity.getId(), entity);
-		}
+	private static List<OrderResponseDto> convert(Iterable<Order> entities) {
+		return StreamSupport.stream(entities.spliterator(), false)
+				.map(OrderController::convert)
+				.collect(Collectors.toList());
 	}
 }
