@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { AlertController, PopoverController } from '@ionic/angular';
 import {
   OrderControllerRestClient,
   OrderCreationRequestDto,
@@ -21,6 +21,9 @@ import { OrderEditComponent } from './order-edit.component';
     </ion-header>
 
     <ion-content>
+      <ion-refresher slot="fixed" (ionRefresh)="loadOrders($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
       <ion-item-sliding *ngFor="let order of orders">
         <ion-item>
           {{ order.drink }}
@@ -50,18 +53,31 @@ export class OrdersPage implements OnInit {
 
   constructor(
     private orderApi: OrderControllerRestClient,
-    private popCtrl: PopoverController
+    private popCtrl: PopoverController,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
-    this.orderApi
-      .getAll()
-      .subscribe(
-        (orders: OrderResponseDto[]) =>
-          (this.orders =
-            orders.map((dto) => new Order({ id: dto.id, drink: dto.drink })) ||
-            [])
-      );
+    this.loadOrders();
+  }
+
+  loadOrders(event?) {
+    this.orderApi.getAll().subscribe(
+      (orders: OrderResponseDto[]) => {
+        this.orders =
+          orders.map((dto) => new Order({ id: dto.id, drink: dto.drink })) ||
+          [];
+        event?.target?.complete();
+      },
+      async (error) => {
+        event?.target?.complete();
+        const alertElt = await this.alertController.create({
+          header: 'Impossible de charger les commandes',
+          message: JSON.stringify(error),
+        });
+        await alertElt.present();
+      }
+    );
   }
 
   delete(order: Order) {
