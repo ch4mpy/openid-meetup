@@ -4,7 +4,7 @@ Support project for a Meetup about a sample OpenID "full" stack composed of:
 - Spring RESTfull API as resource-server
 - Ionic-Angular Web & Android app as client
 
-Meetup Power-Point is joined for more background info.
+Meetup slides are accessible [from there](https://drive.google.com/file/d/1BVw5y3nAh9aU2n0q4isGCl5kM3HclsqR/view?usp=sharing) for more background info.
 
 ## Setup
 
