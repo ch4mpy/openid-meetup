@@ -11,6 +11,8 @@ export class UaaService implements OnDestroy {
   constructor(private oidcSecurityService: OidcSecurityService) {}
 
   public async init(): Promise<boolean> {
+    this.userdataSubscription?.unsubscribe();
+
     const isAlreadyAuthenticated = await this.oidcSecurityService
       .checkAuthIncludingServer()
       .toPromise();

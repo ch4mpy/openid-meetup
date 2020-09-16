@@ -17,12 +17,8 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthorizationHeaderHttpInterceptor } from './authorization-header.http-interceptor';
-import { UaaService } from './uaa.service';
 
-export function configureAuth(
-  oidcConfigService: OidcConfigService,
-  uaa: UaaService
-) {
+export function configureAuth(oidcConfigService: OidcConfigService) {
   return async () => {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
     await oidcConfigService.withConfig(environment.openIdConfiguration);
@@ -44,7 +40,7 @@ export function configureAuth(
     {
       provide: APP_INITIALIZER,
       useFactory: configureAuth,
-      deps: [OidcConfigService, UaaService],
+      deps: [OidcConfigService],
       multi: true,
     },
     {
