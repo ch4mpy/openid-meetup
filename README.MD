@@ -1,3 +1,11 @@
+Support project for a Meetup about a sample OpenID "full" stack composed of:
+
+- Keycloak as authorization-server
+- Spring RESTfull API as resource-server
+- Ionic-Angular Web & Android app as client
+
+Meetup Power-Point is joined for more background info.
+
 ## Setup
 
 ### Prerequisites
@@ -11,13 +19,6 @@
   - [Android Studio](https://developer.android.com/studio) for building and running Android projects.
 - [Keycloak](https://www.keycloak.org/downloads.html)
 - SSL certificate. I wrote a [step-by-step tutorial](https://stackoverflow.com/a/63874376/619830) to create a self-signed certificate and register it on Widows, Keycloak, Spring and Ionic app
-
-### Self-signed certificate
-
-Https is a requirement for OAuth2.
-
-If you don't have one already, you really should generate a self-signed certificate and configure your dev servers & clients to use it.
-Please refer to [this tutorial I wrote](https://stackoverflow.com/a/63874376/619830) to do so.
 
 ### Build & run
 
