@@ -9,12 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Link } from './link';
 
 
 export interface OrderResponseDto { 
     id?: number;
     drink?: string;
-    _links?: { [key: string]: Link; };
 }
 

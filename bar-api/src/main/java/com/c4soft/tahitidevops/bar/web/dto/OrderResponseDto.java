@@ -1,8 +1,6 @@
 package com.c4soft.tahitidevops.bar.web.dto;
 
-import org.springframework.hateoas.RepresentationModel;
-
-public class OrderResponseDto extends RepresentationModel<OrderResponseDto> {
+public class OrderResponseDto {
 	public final Long id;
 	public final String drink;
 

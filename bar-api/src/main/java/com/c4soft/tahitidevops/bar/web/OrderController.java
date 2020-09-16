@@ -9,7 +9,6 @@ import java.util.stream.StreamSupport;
 
 import javax.validation.Valid;
 
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.c4_soft.springaddons.security.oauth2.oidc.OidcIdAuthenticationToken;
 import com.c4soft.tahitidevops.bar.domain.Order;
 import com.c4soft.tahitidevops.bar.persistence.OrderRepo;
 import com.c4soft.tahitidevops.bar.web.dto.OrderCreationRequestDto;
@@ -52,9 +52,9 @@ public class OrderController {
 
 	@PostMapping
 	public ResponseEntity<Long>
-			placeOrder(@Valid @RequestBody OrderCreationRequestDto dto, KeycloakAuthenticationToken auth) {
-		final var order = orderRepo
-				.save(new Order(dto.drink, auth.getAccount().getKeycloakSecurityContext().getToken().getSubject()));
+			placeOrder(@Valid @RequestBody OrderCreationRequestDto dto, OidcIdAuthenticationToken auth) {
+		// auth.getAccount().getKeycloakSecurityContext().getToken().getSubject()
+		final var order = orderRepo.save(new Order(dto.drink, auth.getToken().getSubject()));
 
 		return ResponseEntity
 				.created(linkTo(methodOn(OrderController.class).getById(order.getId())).withSelfRel().toUri())

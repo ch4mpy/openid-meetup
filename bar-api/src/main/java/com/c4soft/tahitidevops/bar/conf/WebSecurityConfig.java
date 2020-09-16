@@ -1,47 +1,40 @@
 package com.c4soft.tahitidevops.bar.conf;
 
-import org.keycloak.adapters.KeycloakConfigResolver;
-import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
-import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
-import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
-import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@KeycloakConfiguration
-@Import(KeycloakSpringBootConfigResolver.class)
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+import com.c4_soft.springaddons.security.oauth2.keycloak.KeycloakOidcIdAuthenticationConverter;
+import com.c4_soft.springaddons.security.oauth2.oidc.OidcIdAuthenticationToken;
 
-	@Bean
-	public KeycloakConfigResolver KeyCloakConfigResolver() {
-		return new KeycloakSpringBootConfigResolver();
-	}
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) {
-		auth.authenticationProvider(keycloakAuthenticationProvider());
-	}
+	Converter<Jwt, Collection<GrantedAuthority>> authoritiesConverter;
 
 	@Bean
-	@Override
-	protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-		return new NullAuthenticatedSessionStrategy();
+	public Converter<Jwt, OidcIdAuthenticationToken> authenticationConverter() {
+		return new KeycloakOidcIdAuthenticationConverter(authoritiesConverter);
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		super.configure(http);
+		http.oauth2ResourceServer().jwt().jwtAuthenticationConverter(authenticationConverter());
 
 		// @formatter:off
         http.anonymous().and()

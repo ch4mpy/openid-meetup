@@ -14,16 +14,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 
-import com.c4_soft.springaddons.security.oauth2.test.annotations.keycloak.WithMockKeycloakAuth;
+import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockOidcId;
 import com.c4_soft.springaddons.security.oauth2.test.mockmvc.MockMvcSupport;
-import com.c4_soft.springaddons.security.oauth2.test.mockmvc.keycloak.ServletKeycloakAuthUnitTestingSupport;
 import com.c4soft.tahitidevops.bar.conf.WebSecurityConfig;
 import com.c4soft.tahitidevops.bar.domain.Order;
 import com.c4soft.tahitidevops.bar.persistence.OrderRepo;
 import com.c4soft.tahitidevops.bar.web.dto.OrderCreationRequestDto;
 
 @WebMvcTest(OrderController.class)
-@Import({ ServletKeycloakAuthUnitTestingSupport.UnitTestConfig.class, WebSecurityConfig.class })
+@Import({ MockMvcSupport.class, WebSecurityConfig.class })
 class OrderControllerTest {
 
 	@MockBean
@@ -41,13 +40,13 @@ class OrderControllerTest {
 	}
 
 	@Test
-	@WithMockKeycloakAuth
+	@WithMockOidcId
 	void whenUserAuthenticatedThenCanListOrders() throws Exception {
 		api.get("/orders").andExpect(status().isOk());
 	}
 
 	@Test
-	@WithMockKeycloakAuth
+	@WithMockOidcId
 	void whenOrderIdIsUnknownThen404() throws Exception {
 		when(orderRepo.findById(any())).thenReturn(Optional.empty());
 
@@ -55,7 +54,7 @@ class OrderControllerTest {
 	}
 
 	@Test
-	@WithMockKeycloakAuth
+	@WithMockOidcId
 	void whenUserAuthenticatedThenCanPlaceOrder() throws Exception {
 		when(orderRepo.save(any())).thenAnswer(invoc -> ((Order) invoc.getArgument(0)).setId(42L));
 
@@ -65,7 +64,7 @@ class OrderControllerTest {
 	}
 
 	@Test
-	@WithMockKeycloakAuth
+	@WithMockOidcId
 	void whenPlaceOrderWithEmptyDrinkThenBadRequest() throws Exception {
 		final var payload = new OrderCreationRequestDto();
 
