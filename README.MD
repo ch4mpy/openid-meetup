@@ -12,7 +12,7 @@ Meetup slides are accessible [from there](https://drive.google.com/file/d/1BVw5y
 
 - [Git](https://git-scm.com/downloads) (with Git Bash under Windows).
 - [Node.js](https://nodejs.org/en/download/) with npm.
-- JDK 11. Not 8, not 14, **11**: my test lib requires 11 at minimum and Keycloak 11 does not support JDK above 11.
+- JDK 11 or above.
 - Decent IDE(s). I use
   - [VS Code](https://code.visualstudio.com/download) with [John Papa's Angular Essentials](https://marketplace.visualstudio.com/items?itemName=johnpapa.angular-essentials) extension for Ionic / Angular projects.
   - [STS for Eclispe](https://spring.io/tools) for Spring projects.
