@@ -2,26 +2,43 @@ package com.c4soft.tahitidevops.bar.persistence;
 
 import java.util.Optional;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Repository;
 
 import com.c4soft.tahitidevops.bar.domain.Order;
 
-public interface OrderRepo extends CrudRepository<Order, Long> {
+@Repository
+public class OrderRepo {
 
-	@Override
+	private final OrderCrudRepository delegate;
+
+	@Autowired
+	public OrderRepo(OrderCrudRepository delegate) {
+		super();
+		this.delegate = delegate;
+	}
+
 	// authentication.account.keycloakSecurityContext.token.subject")
 	@PostFilter("hasAuthority('BARMAN') or hasAuthority('WAITER') or filterObject.createdBy == authentication.token.subject")
-	Iterable<Order> findAll();
+	public Iterable<Order> findAll() {
+		return this.delegate.findAll();
+	}
 
-	@Override
 	@PostAuthorize("hasAuthority('BARMAN') or hasAuthority('WAITER') or returnObject.orElse(null)?.createdBy == authentication.token.subject")
-	Optional<Order> findById(Long id);
+	public Optional<Order> findById(Long id) {
+		return this.delegate.findById(id);
+	}
 
-	@Override
 	@PreAuthorize("hasAuthority('BARMAN') or hasAuthority('WAITER') or #entity.createdBy == authentication.token.subject")
-	void delete(Order entity);
+	public void delete(Order entity) {
+		this.delegate.delete(entity);
+	}
 
+	@PreAuthorize("hasAuthority('BARMAN') or hasAuthority('WAITER') or #entity.createdBy == authentication.token.subject")
+	public Order save(Order entity) {
+		return this.delegate.save(entity);
+	}
 }

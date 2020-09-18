@@ -20,19 +20,22 @@ import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockOidcId;
 import com.c4soft.tahitidevops.bar.domain.Order;
 
 @DataJpaTest
-@Import({ OrderRepoTest.SecurityConf.class })
+@Import({ OrderRepoTest.SecurityConf.class, OrderRepo.class })
 class OrderRepoTest {
 
 	@Autowired
 	OrderRepo orderRepo;
+
+	@Autowired
+	OrderCrudRepository unsecuredRepo;
 
 	private Order mojito;
 	private Order guinness;
 
 	@BeforeEach
 	void setup() {
-		mojito = orderRepo.save(new Order("mojito", BARMAN_SUBJECT));
-		guinness = orderRepo.save(new Order("pint of Guinness", CLIENT_SUBJECT));
+		mojito = unsecuredRepo.save(new Order("mojito", BARMAN_SUBJECT));
+		guinness = unsecuredRepo.save(new Order("pint of Guinness", CLIENT_SUBJECT));
 	}
 
 	@Test
