@@ -19,7 +19,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<springdoc-openapi.version>1.4.6</springdoc-openapi.version>
-		<com.c4-soft.springaddons.version>2.3.4</com.c4-soft.springaddons.version>
+		<com.c4-soft.springaddons.version>2.4.0</com.c4-soft.springaddons.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>

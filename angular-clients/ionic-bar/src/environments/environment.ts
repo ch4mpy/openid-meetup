@@ -10,8 +10,9 @@ export const environment = {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
     clientId: 'tahiti-devops',
     forbiddenRoute: '/settings',
+    eagerLoadAuthWellKnownEndpoints: false,
     ignoreNonceAfterRefresh: true, // Keycloak sends refresh_token with nonce
-    logLevel: LogLevel.Debug,
+    logLevel: LogLevel.Warn,
     postLogoutRedirectUri: 'com.c4-soft://device/ionic-bar',
     redirectUrl: 'com.c4-soft://device/ionic-bar',
     renewTimeBeforeTokenExpiresInSeconds: 10,

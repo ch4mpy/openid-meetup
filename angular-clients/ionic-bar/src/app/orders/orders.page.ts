@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter } from '@angular/core';
 import { AlertController, PopoverController } from '@ionic/angular';
 import {
   OrderControllerRestClient,
@@ -48,16 +48,17 @@ import { OrderEditComponent } from './order-edit.component';
     </ion-footer>`,
   styles: [],
 })
-export class OrdersPage implements OnInit {
+export class OrdersPage {
   orders: Order[] = [];
 
   constructor(
     private orderApi: OrderControllerRestClient,
     private popCtrl: PopoverController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.loadOrders();
   }
 
@@ -67,6 +68,7 @@ export class OrdersPage implements OnInit {
         this.orders =
           orders.map((dto) => new Order({ id: dto.id, drink: dto.drink })) ||
           [];
+        this.changeDetector.detectChanges();
         event?.target?.complete();
       },
       async (error) => {

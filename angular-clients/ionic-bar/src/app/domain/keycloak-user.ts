@@ -1,6 +1,5 @@
 export class KeycloakUser {
   sub: string;
-  email: string;
   preferredUsername: string;
   roles: string[] = [];
 
