@@ -13,8 +13,8 @@ export const environment = {
     eagerLoadAuthWellKnownEndpoints: false,
     ignoreNonceAfterRefresh: true, // Keycloak sends refresh_token with nonce
     logLevel: LogLevel.Warn,
-    postLogoutRedirectUri: 'https://laptop-jerem:8100/ionic-bar',
-    redirectUrl: 'https://laptop-jerem:8100/ionic-bar',
+    postLogoutRedirectUri: 'https://laptop-jerem:8100/cafe-skifo',
+    redirectUrl: 'https://laptop-jerem:8100/cafe-skifo',
     renewTimeBeforeTokenExpiresInSeconds: 60,
     responseType: 'code',
     scope: 'email openid offline_access roles',

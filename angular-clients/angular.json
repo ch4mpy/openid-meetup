@@ -3,26 +3,26 @@
   "version": 1,
   "newProjectRoot": ".",
   "projects": {
-    "ionic-bar": {
+    "cafe-skifo": {
       "projectType": "application",
       "schematics": {},
-      "root": "ionic-bar",
-      "sourceRoot": "ionic-bar/src",
+      "root": "cafe-skifo",
+      "sourceRoot": "cafe-skifo/src",
       "prefix": "bar",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ionic-bar",
-            "index": "ionic-bar/src/index.html",
-            "main": "ionic-bar/src/main.ts",
-            "polyfills": "ionic-bar/src/polyfills.ts",
-            "tsConfig": "ionic-bar/tsconfig.app.json",
+            "outputPath": "dist/cafe-skifo",
+            "index": "cafe-skifo/src/index.html",
+            "main": "cafe-skifo/src/main.ts",
+            "polyfills": "cafe-skifo/src/polyfills.ts",
+            "tsConfig": "cafe-skifo/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "ionic-bar/src/silent-renew.html",
-              "ionic-bar/src/favicon.ico",
-              "ionic-bar/src/assets",
+              "cafe-skifo/src/silent-renew.html",
+              "cafe-skifo/src/favicon.ico",
+              "cafe-skifo/src/assets",
               {
                 "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
@@ -30,7 +30,7 @@
               }
             ],
             "styles": [
-              "ionic-bar/src/styles.css",
+              "cafe-skifo/src/styles.css",
               {
                 "input": "node_modules/@ionic/angular/css/normalize.css"
               },
@@ -59,7 +59,7 @@
                 "input": "node_modules/@ionic/angular/css/flex-utils.css"
               },
               {
-                "input": "ionic-bar/src/theme/variables.css"
+                "input": "cafe-skifo/src/theme/variables.css"
               }
             ],
             "scripts": []
@@ -68,16 +68,16 @@
             "laptop-jerem": {
               "fileReplacements": [
                 {
-                  "replace": "ionic-bar/src/environments/environment.ts",
-                  "with": "ionic-bar/src/environments/environment.laptop-jerem.ts"
+                  "replace": "cafe-skifo/src/environments/environment.ts",
+                  "with": "cafe-skifo/src/environments/environment.laptop-jerem.ts"
                 }
               ]
             },
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "ionic-bar/src/environments/environment.ts",
-                  "with": "ionic-bar/src/environments/environment.prod.ts"
+                  "replace": "cafe-skifo/src/environments/environment.ts",
+                  "with": "cafe-skifo/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -106,7 +106,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ionic-bar:build",
+            "browserTarget": "cafe-skifo:build",
             "host": "laptop-jerem",
             "ssl": true,
             "sslCert": "./laptop-jerem_self_signed.crt",
@@ -114,47 +114,47 @@
           },
           "configurations": {
             "laptop-jerem": {
-              "browserTarget": "ionic-bar:build:laptop-jerem"
+              "browserTarget": "cafe-skifo:build:laptop-jerem"
             },
             "production": {
-              "browserTarget": "ionic-bar:build:production"
+              "browserTarget": "cafe-skifo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ionic-bar:build"
+            "browserTarget": "cafe-skifo:build"
           }
         },
         "ionic-cordova-serve": {
           "builder": "@ionic/angular-toolkit:cordova-serve",
           "options": {
-            "cordovaBuildTarget": "ionic-bar:ionic-cordova-build",
-            "devServerTarget": "ionic-bar:serve"
+            "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build",
+            "devServerTarget": "cafe-skifo:serve"
           },
           "configurations": {
             "laptop-jerem": {
-              "cordovaBuildTarget": "ionic-bar:ionic-cordova-build:laptop-jerem",
-              "devServerTarget": "ionic-bar:serve:laptop-jerem"
+              "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:laptop-jerem",
+              "devServerTarget": "cafe-skifo:serve:laptop-jerem"
             },
             "production": {
-              "cordovaBuildTarget": "ionic-bar:ionic-cordova-build:production",
-              "devServerTarget": "ionic-bar:serve:production"
+              "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:production",
+              "devServerTarget": "cafe-skifo:serve:production"
             }
           }
         },
         "ionic-cordova-build": {
           "builder": "@ionic/angular-toolkit:cordova-build",
           "options": {
-            "browserTarget": "ionic-bar:build"
+            "browserTarget": "cafe-skifo:build"
           },
           "configurations": {
             "laptop-jerem": {
-              "browserTarget": "ionic-bar:build:laptop-jerem"
+              "browserTarget": "cafe-skifo:build:laptop-jerem"
             },
             "production": {
-              "browserTarget": "ionic-bar:build:production"
+              "browserTarget": "cafe-skifo:build:production"
             }
           }
         }
@@ -181,7 +181,7 @@
       }
     }
   },
-  "defaultProject": "ionic-bar",
+  "defaultProject": "cafe-skifo",
   "cli": {
     "defaultCollection": "@ionic/angular-toolkit",
     "analytics": false

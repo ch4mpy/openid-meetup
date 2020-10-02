@@ -1,13 +1,17 @@
 {
   "appId": "com.c4soft.openapimeetup.ionicbar",
-  "appName": "ionic-bar",
+  "appName": "cafe-skifo",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "../dist/ionic-bar",
+  "webDir": "../dist/cafe-skifo",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
     }
   },
-  "cordova": {}
+  "cordova": {},
+  "server": {
+    "url": "https://laptop-jerem:8100",
+    "cleartext": true
+  }
 }

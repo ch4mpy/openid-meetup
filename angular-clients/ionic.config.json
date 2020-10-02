@@ -1,13 +1,13 @@
 {
   "projects": {
-    "ionic-bar": {
-      "name": "ionic-bar",
+    "cafe-skifo": {
+      "name": "cafe-skifo",
       "integrations": {
         "capacitor": {}
       },
       "type": "angular",
-      "root": "ionic-bar"
+      "root": "cafe-skifo"
     }
   },
-  "defaultProject": "ionic-bar"
+  "defaultProject": "cafe-skifo"
 }

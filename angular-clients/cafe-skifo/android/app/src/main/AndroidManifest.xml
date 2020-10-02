@@ -27,14 +27,14 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="com.c4-soft" android:host="device" android:path="/ionic-bar"/>
+                <data android:scheme="com.c4-soft" android:host="device" android:path="/cafe-skifo"/>
             </intent-filter>
 
           <intent-filter android:autoVerify="true">
             <action android:name="android.intent.action.VIEW"/>
             <category android:name="android.intent.category.DEFAULT"/>
             <category android:name="android.intent.category.BROWSABLE"/>
-            <data android:scheme="https" android:host="laptop-jerem" android:port="8100" android:path="/ionic-bar"/>
+            <data android:scheme="https" android:host="laptop-jerem" android:port="8100" android:path="/cafe-skifo"/>
           </intent-filter>
 
         </activity>

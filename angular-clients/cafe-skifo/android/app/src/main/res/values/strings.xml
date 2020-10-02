@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">ionic-bar</string>
-    <string name="title_activity_main">ionic-bar</string>
+    <string name="app_name">cafe-skifo</string>
+    <string name="title_activity_main">cafe-skifo</string>
     <string name="package_name">com.c4soft.openapimeetup.ionicbar</string>
 </resources>
