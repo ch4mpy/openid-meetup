@@ -1,9 +1,9 @@
-export class KeycloakUser {
+export class TahitiDevopsUser {
   sub: string;
   preferredUsername: string;
   roles: string[] = [];
 
-  constructor(init?: Partial<KeycloakUser>) {
+  constructor(init?: Partial<TahitiDevopsUser>) {
     Object.assign(this, init);
   }
 
@@ -15,5 +15,5 @@ export class KeycloakUser {
     return this.roles.includes('BARMAN');
   }
 
-  static readonly ANONYMOUS = new KeycloakUser({});
+  static readonly ANONYMOUS = new TahitiDevopsUser({});
 }

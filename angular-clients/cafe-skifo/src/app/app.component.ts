@@ -3,7 +3,7 @@ import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { NavController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { KeycloakUser } from './domain/keycloak-user';
+import { TahitiDevopsUser } from './domain/tahiti-devops-user';
 import { UaaService } from './uaa.service';
 
 @Component({
@@ -82,10 +82,9 @@ import { UaaService } from './uaa.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   selected = '';
-  currentUser: KeycloakUser;
-  isBarman: boolean;
 
   private deeplinksRouteSubscription: Subscription;
+  private currentUserSubscription: Subscription;
 
   constructor(
     private deeplinks: Deeplinks,
@@ -110,7 +109,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.deeplinksRouteSubscription.unsubscribe();
+    this.currentUserSubscription?.unsubscribe();
+    this.deeplinksRouteSubscription?.unsubscribe();
   }
 
   login() {
@@ -121,28 +121,32 @@ export class AppComponent implements OnInit, OnDestroy {
     this.uaa.logout();
   }
 
+  get currentUser(): TahitiDevopsUser {
+    return this.uaa.currentUser;
+  }
+
   private setupDeeplinks() {
-    this.deeplinks.routeWithNavController(this.navController, {}).subscribe(
-      (match) =>
-        this.navController
-          .navigateForward(match.$link.path + '?' + match.$link.queryString)
-          .then(async () => await this.initUaa()),
-      (nomatch) =>
-        console.error(
-          "Got a deeplink that didn't match",
-          JSON.stringify(nomatch)
-        )
-    );
+    this.deeplinksRouteSubscription = this.deeplinks
+      .routeWithNavController(this.navController, {})
+      .subscribe(
+        (match) =>
+          this.navController
+            .navigateForward(match.$link.path + '?' + match.$link.queryString)
+            .then(async () => await this.initUaa()),
+        (nomatch) =>
+          console.error(
+            "Got a deeplink that didn't match",
+            JSON.stringify(nomatch)
+          )
+      );
   }
 
   private async initUaa(): Promise<void> {
     await this.uaa.init();
 
-    this.uaa.currentUser$.subscribe((u) => {
-      if (this.currentUser !== u) {
-        this.currentUser = u;
-        this.changedetector.detectChanges();
-      }
-    });
+    this.currentUserSubscription?.unsubscribe();
+    this.currentUserSubscription = this.uaa.currentUser$.subscribe(() =>
+      this.changedetector.detectChanges()
+    );
   }
 }

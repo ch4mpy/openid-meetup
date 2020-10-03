@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OrderControllerRestClient } from '@tahiti-devops/bar-api';
 import { Observable, Subscription } from 'rxjs';
-import { KeycloakUser } from '../domain/keycloak-user';
+import { TahitiDevopsUser } from '../domain/tahiti-devops-user';
 import { UaaService } from '../uaa.service';
 
 @Component({
@@ -44,7 +44,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     basePath: new FormControl(null, [Validators.required]),
   });
 
-  user$: Observable<KeycloakUser>;
+  user$: Observable<TahitiDevopsUser>;
 
   private settingsFormValueSubscription: Subscription;
 

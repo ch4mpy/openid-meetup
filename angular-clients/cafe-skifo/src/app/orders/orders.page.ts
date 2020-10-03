@@ -1,10 +1,13 @@
 import { HttpResponse } from '@angular/common/http';
-import { ChangeDetectorRef, Component, EventEmitter } from '@angular/core';
-import { AlertController, PopoverController } from '@ionic/angular';
+import { Component, EventEmitter, NgZone } from '@angular/core';
+import {
+  AlertController,
+  IonRefresher,
+  PopoverController,
+} from '@ionic/angular';
 import {
   OrderControllerRestClient,
   OrderCreationRequestDto,
-  OrderResponseDto,
 } from '@tahiti-devops/bar-api';
 import { Observable } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
@@ -55,31 +58,32 @@ export class OrdersPage {
     private orderApi: OrderControllerRestClient,
     private popCtrl: PopoverController,
     private alertController: AlertController,
-    private changeDetector: ChangeDetectorRef
+    private zone: NgZone
   ) {}
 
   ionViewWillEnter() {
     this.loadOrders();
   }
 
-  loadOrders(event?) {
-    this.orderApi.getAll().subscribe(
-      (orders: OrderResponseDto[]) => {
-        this.orders =
-          orders.map((dto) => new Order({ id: dto.id, drink: dto.drink })) ||
-          [];
-        this.changeDetector.detectChanges();
-        event?.target?.complete();
-      },
-      async (error) => {
-        event?.target?.complete();
-        const alertElt = await this.alertController.create({
-          header: 'Impossible de charger les commandes',
-          message: JSON.stringify(error),
+  loadOrders(event?: CustomEvent) {
+    this.zone.run(async () => {
+      const refresher = (event?.target as unknown) as IonRefresher;
+      this.orders = await this.orderApi
+        .getAll()
+        .toPromise()
+        .then((dtos) => dtos.map((dto) => new Order(dto)))
+        .catch(async (error) => {
+          refresher?.complete();
+          this.alertController
+            .create({
+              header: 'Impossible de charger les commandes',
+              message: JSON.stringify(error),
+            })
+            .then((alertElt) => alertElt.present());
+          return this.orders;
         });
-        await alertElt.present();
-      }
-    );
+      await refresher?.complete();
+    });
   }
 
   delete(order: Order) {

@@ -5,7 +5,7 @@
 import { LogLevel } from 'angular-auth-oidc-client';
 
 export const environment = {
-  production: false,
+  production: true,
   openIdConfiguration: {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
     clientId: 'tahiti-devops',

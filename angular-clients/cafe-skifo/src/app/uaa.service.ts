@@ -8,11 +8,13 @@ import {
   Subscription,
 } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { KeycloakUser } from './domain/keycloak-user';
+import { TahitiDevopsUser } from './domain/tahiti-devops-user';
 
 @Injectable({ providedIn: 'root' })
 export class UaaService implements OnDestroy {
-  private user$ = new BehaviorSubject<KeycloakUser>(KeycloakUser.ANONYMOUS);
+  private user$ = new BehaviorSubject<TahitiDevopsUser>(
+    TahitiDevopsUser.ANONYMOUS
+  );
   private userdataSubscription: Subscription;
 
   constructor(private oidcSecurityService: OidcSecurityService) {
@@ -47,7 +49,7 @@ export class UaaService implements OnDestroy {
 
   public async init(): Promise<boolean> {
     if (!navigator.onLine) {
-      this.user$.next(KeycloakUser.ANONYMOUS);
+      this.user$.next(TahitiDevopsUser.ANONYMOUS);
       return false;
     }
 
@@ -55,7 +57,7 @@ export class UaaService implements OnDestroy {
     return !!user.sub;
   }
 
-  private async onBackOnline(): Promise<KeycloakUser> {
+  private async onBackOnline(): Promise<TahitiDevopsUser> {
     const isAlreadyAuthenticated = await this.oidcSecurityService
       .checkAuth()
       .toPromise()
@@ -79,18 +81,22 @@ export class UaaService implements OnDestroy {
 
   private static fromToken = (idToken: any) =>
     idToken?.sub
-      ? new KeycloakUser({
+      ? new TahitiDevopsUser({
           sub: idToken.sub,
           preferredUsername: idToken.preferred_username,
           roles: idToken?.resource_access?.['tahiti-devops']?.roles || [],
         })
-      : KeycloakUser.ANONYMOUS;
+      : TahitiDevopsUser.ANONYMOUS;
 
   private onOffline() {
     this.userdataSubscription?.unsubscribe();
   }
 
-  get currentUser$(): Observable<KeycloakUser> {
+  get currentUser(): TahitiDevopsUser {
+    return this.user$.value;
+  }
+
+  get currentUser$(): Observable<TahitiDevopsUser> {
     return this.user$;
   }
 
@@ -101,8 +107,8 @@ export class UaaService implements OnDestroy {
   public logout(): boolean {
     this.oidcSecurityService.logoff();
 
-    if (this.user$.value !== KeycloakUser.ANONYMOUS) {
-      this.user$.next(KeycloakUser.ANONYMOUS);
+    if (this.user$.value !== TahitiDevopsUser.ANONYMOUS) {
+      this.user$.next(TahitiDevopsUser.ANONYMOUS);
       return true;
     }
 

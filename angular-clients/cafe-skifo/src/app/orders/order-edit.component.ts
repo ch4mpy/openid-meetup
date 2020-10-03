@@ -5,8 +5,10 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IonInput } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Order } from '../domain/order';
 
@@ -22,7 +24,7 @@ import { Order } from '../domain/order';
       <form [formGroup]="orderEditForm" (ngSubmit)="save()">
         <ion-item>
           <ion-label position="floating">boisson</ion-label>
-          <ion-input formControlName="drink" autofocus="true"></ion-input>
+          <ion-input #drink formControlName="drink" autofocus></ion-input>
         </ion-item>
         <ion-button
           type="submit"
@@ -38,6 +40,7 @@ import { Order } from '../domain/order';
 export class OrderEditComponent implements OnInit, OnDestroy {
   @Input() order: Order;
   @Output() onSubmit = new EventEmitter<Order>();
+  @ViewChild('drink') drinkInput: IonInput;
 
   orderEditForm: FormGroup;
   private orderEditFormValueSubscription: Subscription;
@@ -54,6 +57,17 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           this.order.drink = orderForm.drink;
         }
       }
+    );
+    setTimeout(
+      () =>
+        this.drinkInput
+          .setFocus()
+          .then(() =>
+            this.drinkInput
+              .getInputElement()
+              .then((elt) => setTimeout(() => elt.select(), 100))
+          ),
+      500
     );
   }
 
