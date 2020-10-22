@@ -9,6 +9,7 @@
     "@ch4mpy/ng-bt-scan": "^1.0.0",
     "@ionic-native/core": "^5.27.0",
     "@ionic-native/deeplinks": "^5.27.0",
+    "@ionic/storage": "^2.3.1",
     "ionic-plugin-deeplinks": "^1.0.20"
   },
   "devDependencies": {

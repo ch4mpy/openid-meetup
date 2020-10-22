@@ -16,53 +16,43 @@ export class UaaService implements OnDestroy {
   private user$ = new BehaviorSubject<TahitiDevopsUser>(
     TahitiDevopsUser.ANONYMOUS
   );
+
+  private offline$ = UaaService.offline$();
   private userdataSubscription: Subscription;
+  private networkStatusSubscription: Subscription;
 
   constructor(private oidcSecurityService: OidcSecurityService) {
-    console.log(
-      `Starting UaaService in ${navigator.onLine ? 'online' : 'offline'} mode`
+    this.networkStatusSubscription = this.offline$.subscribe(
+      (isOffline: boolean) =>
+        isOffline ? this.onOffline() : this.onBackOnline()
     );
-    merge<boolean>(
-      fromEvent(window, 'offline').pipe(
-        map((): boolean => {
-          console.log('Switching UaaService to offline mode');
-          return true;
-        })
-      ),
-      fromEvent(window, 'online').pipe(
-        map((): boolean => {
-          console.log('Switching UaaService to online mode');
-          return false;
-        })
-      )
-    ).subscribe((isOffline: boolean) => {
-      if (isOffline) {
-        this.onOffline();
-      } else {
-        this.onBackOnline();
-      }
-    });
   }
 
   public ngOnDestroy() {
-    this.userdataSubscription.unsubscribe();
+    this.networkStatusSubscription?.unsubscribe();
+    this.userdataSubscription?.unsubscribe();
   }
 
-  public async init(): Promise<boolean> {
-    if (!navigator.onLine) {
-      this.user$.next(TahitiDevopsUser.ANONYMOUS);
-      return false;
-    }
+  public async init(): Promise<TahitiDevopsUser> {
+    console.log(
+      `Init UaaService in ${navigator.onLine ? 'online' : 'offline'} mode`
+    );
+    const initialUser: TahitiDevopsUser = navigator.onLine
+      ? await this.onBackOnline()
+      : TahitiDevopsUser.ANONYMOUS;
+    this.user$ = new BehaviorSubject(initialUser);
 
-    const user = await this.onBackOnline();
-    return !!user.sub;
+    return this.user$.value;
   }
 
   private async onBackOnline(): Promise<TahitiDevopsUser> {
     const isAlreadyAuthenticated = await this.oidcSecurityService
       .checkAuth()
       .toPromise()
-      .catch(() => false);
+      .catch((err) => {
+        console.warn(err);
+        return false;
+      });
 
     const user = UaaService.fromToken(
       this.oidcSecurityService.getPayloadFromIdToken()
@@ -103,6 +93,10 @@ export class UaaService implements OnDestroy {
     return this.user$;
   }
 
+  get accessToken(): string {
+    return this.oidcSecurityService.getToken();
+  }
+
   public login(): void {
     this.oidcSecurityService.authorize();
   }
@@ -116,5 +110,22 @@ export class UaaService implements OnDestroy {
     }
 
     return false;
+  }
+
+  private static offline$() {
+    return merge<boolean>(
+      fromEvent(window, 'offline').pipe(
+        map((): boolean => {
+          console.log('Switching UaaService to offline mode');
+          return true;
+        })
+      ),
+      fromEvent(window, 'online').pipe(
+        map((): boolean => {
+          console.log('Switching UaaService to online mode');
+          return false;
+        })
+      )
+    );
   }
 }

@@ -9,6 +9,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { BtScanModule } from '@ch4mpy/ng-bt-scan';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/storage';
 import {
   ApiModule as BarApi,
   OrderControllerRestClient,
@@ -40,6 +41,7 @@ export function configureAuth(oidcConfigService: OidcConfigService) {
     HttpClientModule,
     AppRoutingModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

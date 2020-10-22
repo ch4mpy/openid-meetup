@@ -6,6 +6,7 @@ import { LogLevel } from 'angular-auth-oidc-client';
 
 export const environment = {
   production: false,
+  apiBasePath: 'https://laptop-jerem:9080',
   openIdConfiguration: {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
     clientId: 'cafe-skifo',

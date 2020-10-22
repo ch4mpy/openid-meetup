@@ -4,6 +4,7 @@ import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { NavController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { TahitiDevopsUser } from './domain/tahiti-devops-user';
+import { SettingsService } from './settings/settings.service';
 import { UaaService } from './uaa.service';
 
 @Component({
@@ -91,11 +92,15 @@ export class AppComponent implements OnInit, OnDestroy {
     private navController: NavController,
     private platform: Platform,
     private uaa: UaaService,
-    private changedetector: ChangeDetectorRef
+    private changedetector: ChangeDetectorRef,
+    private settings: SettingsService
   ) {}
 
   async ngOnInit() {
     await this.platform.ready();
+    await this.settings.init();
+    await this.initUaa();
+
     console.log('PLATFORMS: ' + this.platform.platforms());
 
     if (this.platform.is('capacitor')) {
@@ -104,8 +109,6 @@ export class AppComponent implements OnInit, OnDestroy {
       StatusBar.setStyle({ style: StatusBarStyle.Light });
       SplashScreen.hide();
     }
-
-    await this.initUaa();
   }
 
   ngOnDestroy() {

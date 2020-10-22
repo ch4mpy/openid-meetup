@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { OrderControllerRestClient } from '@tahiti-devops/bar-api';
 import { Observable, Subscription } from 'rxjs';
 import { TahitiDevopsUser } from '../domain/tahiti-devops-user';
 import { UaaService } from '../uaa.service';
+import { SettingsService } from './settings.service';
 
 @Component({
   selector: 'bar-settings',
@@ -48,22 +48,17 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   private settingsFormValueSubscription: Subscription;
 
-  constructor(
-    private orderApi: OrderControllerRestClient,
-    private uaa: UaaService
-  ) {}
+  constructor(private settings: SettingsService, private uaa: UaaService) {}
 
   ngOnInit() {
-    this.settingsForm
-      .get('basePath')
-      .patchValue(this.orderApi.configuration.basePath);
+    this.settings
+      .getOrderApiBasePath()
+      .then((basePath) =>
+        this.settingsForm.get('basePath').patchValue(basePath)
+      );
 
     this.settingsFormValueSubscription = this.settingsForm.valueChanges.subscribe(
-      (settings) => {
-        if (this.orderApi.configuration.basePath !== settings.basePath) {
-          this.orderApi.configuration.basePath = settings.basePath;
-        }
-      }
+      (form) => this.settings.setOrderApiBasePath(form.basePath)
     );
 
     this.user$ = this.uaa.currentUser$;

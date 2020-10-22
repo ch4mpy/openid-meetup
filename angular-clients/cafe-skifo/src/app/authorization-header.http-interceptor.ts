@@ -5,20 +5,20 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { Observable } from 'rxjs';
+import { UaaService } from './uaa.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorizationHeaderHttpInterceptor implements HttpInterceptor {
-  constructor(private oidcSecurityService: OidcSecurityService) {}
+  constructor(private uaa: UaaService) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const accessToken = this.oidcSecurityService.getToken();
+    const accessToken = this.uaa.accessToken;
     const request = accessToken
       ? req.clone({
           setHeaders: {
