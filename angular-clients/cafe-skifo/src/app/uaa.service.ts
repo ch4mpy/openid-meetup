@@ -8,6 +8,7 @@ import {
   Subscription,
 } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 import { TahitiDevopsUser } from './domain/tahiti-devops-user';
 
 @Injectable({ providedIn: 'root' })
@@ -84,7 +85,9 @@ export class UaaService implements OnDestroy {
       ? new TahitiDevopsUser({
           sub: idToken.sub,
           preferredUsername: idToken.preferred_username,
-          roles: idToken?.resource_access?.['tahiti-devops']?.roles || [],
+          roles:
+            idToken?.resource_access?.[environment.openIdConfiguration.clientId]
+              ?.roles || [],
         })
       : TahitiDevopsUser.ANONYMOUS;
 

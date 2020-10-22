@@ -19,7 +19,7 @@ public class KeycloakEmbeddedAuthoritiesConverter implements Converter<Jwt, Coll
 	@Override
 	public Collection<GrantedAuthority> convert(Jwt jwt) {
 		final var roles = Optional.ofNullable((JSONObject) jwt.getClaims().get("resource_access"))
-				.flatMap(resourceAccess -> Optional.ofNullable((JSONObject) resourceAccess.get("tahiti-devops")))
+				.flatMap(resourceAccess -> Optional.ofNullable((JSONObject) resourceAccess.get("cafe-skifo")))
 				.flatMap(tahitiDevops -> Optional.ofNullable((JSONArray) tahitiDevops.get("roles")))
 				.orElse(new JSONArray());
 

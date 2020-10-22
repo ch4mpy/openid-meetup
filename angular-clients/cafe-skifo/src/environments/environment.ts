@@ -5,10 +5,10 @@
 import { LogLevel } from 'angular-auth-oidc-client';
 
 export const environment = {
-  production: true,
+  production: false,
   openIdConfiguration: {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
-    clientId: 'tahiti-devops',
+    clientId: 'cafe-skifo',
     forbiddenRoute: '/settings',
     eagerLoadAuthWellKnownEndpoints: false,
     ignoreNonceAfterRefresh: true, // Keycloak sends refresh_token with nonce
@@ -21,7 +21,7 @@ export const environment = {
     silentRenew: true,
     // silentRenewUrl: 'com.c4soft.mobileapp://cafe-skifo/silent-renew-pkce.html',
     useRefreshToken: true,
-    stsServer: 'https://laptop-jerem:8443/auth/realms/master',
+    stsServer: 'https://keycloak.devops.pf/auth/realms/meetup',
     unauthorizedRoute: '/settings',
   },
 };

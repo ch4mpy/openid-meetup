@@ -1,5 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, EventEmitter, NgZone } from '@angular/core';
+import { BtScanService } from '@ch4mpy/ng-bt-scan';
 import {
   AlertController,
   IonRefresher,
@@ -9,7 +10,7 @@ import {
   OrderControllerRestClient,
   OrderCreationRequestDto,
 } from '@tahiti-devops/bar-api';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { Order } from '../domain/order';
 import { OrderEditComponent } from './order-edit.component';
@@ -54,15 +55,25 @@ import { OrderEditComponent } from './order-edit.component';
 export class OrdersPage {
   orders: Order[] = [];
 
+  private scanSubscription: Subscription;
+
   constructor(
     private orderApi: OrderControllerRestClient,
     private popCtrl: PopoverController,
     private alertController: AlertController,
-    private zone: NgZone
+    private zone: NgZone,
+    private btScan: BtScanService
   ) {}
 
   ionViewWillEnter() {
     this.loadOrders();
+    this.scanSubscription = this.btScan.barcode$.subscribe((barcode) =>
+      this.popOrderEdit(barcode)
+    );
+  }
+
+  ionViewWillLeave() {
+    this.scanSubscription?.unsubscribe();
   }
 
   loadOrders(event?: CustomEvent) {
@@ -94,12 +105,12 @@ export class OrdersPage {
     });
   }
 
-  async popOrderEdit() {
+  async popOrderEdit(barcode?: string) {
     const orderCreated = new EventEmitter<Order>();
     const popElmt = await this.popCtrl.create({
       component: OrderEditComponent,
       componentProps: {
-        order: new Order(),
+        order: new Order({ drink: barcode }),
         onSubmit: orderCreated,
       },
     });

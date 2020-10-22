@@ -121,6 +121,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<layers>
+						<enabled>true</enabled>
+					</layers>
+				</configuration>
 				<executions>
 					<execution>
 						<id>pre-integration-test</id>
@@ -149,7 +154,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<apiDocsUrl>https://laptop-jerem:9080/v3/api-docs</apiDocsUrl>
+					<apiDocsUrl>http://localhost:9080/v3/api-docs</apiDocsUrl>
 					<outputFileName>bar.openapi.json</outputFileName>
 					<outputDir>${project.basedir}/..</outputDir>
 				</configuration>
@@ -216,6 +221,39 @@
 				<configuration>
 					<argLine>${surefireArgLine}</argLine>
 					<skipTests>${skip.unit.tests}</skipTests>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.microsoft.azure</groupId>
+				<artifactId>azure-webapp-maven-plugin</artifactId>
+				<version>1.8.0</version>
+				<configuration>
+					<schemaVersion>V2</schemaVersion>
+					<resourceGroup>tahiti-devops-resource-group</resourceGroup>
+					<appName>bar-api</appName>
+					<pricingTier>P1v2</pricingTier>
+					<region>westus2</region>
+					<runtime>
+						<os>linux</os>
+						<javaVersion>java11</javaVersion>
+						<webContainer>java11</webContainer>
+					</runtime>
+					<appSettings>
+						<property>
+							<name>JAVA_OPTS</name>
+							<value>-Dserver.port=80</value>
+						</property>
+					</appSettings>
+					<deployment>
+						<resources>
+							<resource>
+								<directory>${project.basedir}/target</directory>
+								<includes>
+									<include>*.jar</include>
+								</includes>
+							</resource>
+						</resources>
+					</deployment>
 				</configuration>
 			</plugin>
 		</plugins>

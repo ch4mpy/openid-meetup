@@ -1,1 +1,53 @@
-{"openapi":"3.0.1","info":{"title":"OpenAPI definition","version":"v0"},"servers":[{"url":"https://laptop-jerem:9080","description":"Generated server url"}],"paths":{"/orders":{"get":{"tags":["order-controller"],"operationId":"getAll","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/OrderResponseDto"}}}}}}},"post":{"tags":["order-controller"],"operationId":"placeOrder","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/OrderCreationRequestDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"integer","format":"int64"}}}}}}},"/orders/{id}":{"get":{"tags":["order-controller"],"operationId":"getById","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/OrderResponseDto"}}}}}},"delete":{"tags":["order-controller"],"operationId":"deleteById","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"object"}}}}}}}},"components":{"schemas":{"OrderResponseDto":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"drink":{"type":"string"}}},"OrderCreationRequestDto":{"required":["drink"],"type":"object","properties":{"drink":{"type":"string"}}}}}}
+{
+  "openapi": "3.0.1",
+  "info": { "title": "OpenAPI definition", "version": "v0" },
+  "servers": [{ "url": "https://bar-api.azurewebsites.net", "description": "Generated server url" }],
+  "paths": {
+    "/orders": {
+      "get": {
+        "tags": ["order-controller"],
+        "operationId": "getAll",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "*/*": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/OrderResponseDto" } } } }
+          }
+        }
+      },
+      "post": {
+        "tags": ["order-controller"],
+        "operationId": "placeOrder",
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderCreationRequestDto" } } },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK", "content": { "*/*": { "schema": { "type": "integer", "format": "int64" } } } } }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "tags": ["order-controller"],
+        "operationId": "getById",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }],
+        "responses": {
+          "200": { "description": "OK", "content": { "*/*": { "schema": { "$ref": "#/components/schemas/OrderResponseDto" } } } }
+        }
+      },
+      "delete": {
+        "tags": ["order-controller"],
+        "operationId": "deleteById",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer", "format": "int64" } }],
+        "responses": { "200": { "description": "OK", "content": { "*/*": { "schema": { "type": "object" } } } } }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "OrderResponseDto": {
+        "type": "object",
+        "properties": { "id": { "type": "integer", "format": "int64" }, "drink": { "type": "string" } }
+      },
+      "OrderCreationRequestDto": { "required": ["drink"], "type": "object", "properties": { "drink": { "type": "string" } } }
+    }
+  }
+}

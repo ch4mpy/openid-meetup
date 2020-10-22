@@ -6,6 +6,7 @@ import {
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { BtScanModule } from '@ch4mpy/ng-bt-scan';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import {
@@ -29,6 +30,11 @@ export function configureAuth(oidcConfigService: OidcConfigService) {
   declarations: [AppComponent],
   imports: [
     AuthModule.forRoot(),
+    BtScanModule.forRoot({
+      barcodePrefix: '$can$',
+      barcodeSuffix: 'Enter',
+      keysCapturePeriod: 1500,
+    }),
     BarApi,
     BrowserModule,
     HttpClientModule,

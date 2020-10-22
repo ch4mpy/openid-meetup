@@ -8,7 +8,7 @@ export const environment = {
   production: false,
   openIdConfiguration: {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
-    clientId: 'tahiti-devops',
+    clientId: 'cafe-skifo',
     forbiddenRoute: '/settings',
     eagerLoadAuthWellKnownEndpoints: false,
     ignoreNonceAfterRefresh: true, // Keycloak sends refresh_token with nonce
