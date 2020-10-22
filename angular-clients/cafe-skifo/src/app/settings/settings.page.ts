@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { TahitiDevopsUser } from '../domain/tahiti-devops-user';
 import { UaaService } from '../uaa.service';
 import { SettingsService } from './settings.service';
@@ -25,15 +25,15 @@ import { SettingsService } from './settings.service';
         <ion-item-divider>Info utilisateur</ion-item-divider>
         <ion-item>
           <ion-label>nom:</ion-label>
-          <ion-label>{{ (user$ | async).preferredUsername }}</ion-label>
+          <ion-label>{{ currentUser?.preferredUsername }}</ion-label>
         </ion-item>
         <ion-item>
           <ion-label>subject:</ion-label>
-          <ion-label>{{ (user$ | async).sub }}</ion-label>
+          <ion-label>{{ currentUser?.sub }}</ion-label>
         </ion-item>
         <ion-item>
           <ion-label>roles:</ion-label>
-          <ion-label>{{ (user$ | async).roles }}</ion-label>
+          <ion-label>{{ currentUser?.roles }}</ion-label>
         </ion-item>
       </form>
     </ion-content>`,
@@ -43,8 +43,6 @@ export class SettingsPage implements OnInit, OnDestroy {
   settingsForm = new FormGroup({
     basePath: new FormControl(null, [Validators.required]),
   });
-
-  user$: Observable<TahitiDevopsUser>;
 
   private settingsFormValueSubscription: Subscription;
 
@@ -60,11 +58,13 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.settingsFormValueSubscription = this.settingsForm.valueChanges.subscribe(
       (form) => this.settings.setOrderApiBasePath(form.basePath)
     );
-
-    this.user$ = this.uaa.currentUser$;
   }
 
   ngOnDestroy() {
     this.settingsFormValueSubscription.unsubscribe();
+  }
+
+  get currentUser(): TahitiDevopsUser {
+    return this.uaa.currentUser;
   }
 }
