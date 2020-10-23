@@ -30,7 +30,7 @@ import { Configuration }                                     from '../configurat
 })
 export class OrderControllerRestClient {
 
-    protected basePath = 'http://bar-api.azurewebsites.net';
+    protected basePath = 'http://localhost:9080';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;

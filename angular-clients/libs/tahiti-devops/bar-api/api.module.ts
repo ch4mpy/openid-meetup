@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { OrderControllerRestClient } from './api/orderController.service';
+import { RedirectControllerRestClient } from './api/redirectController.service';
 
 @NgModule({
   imports:      [],

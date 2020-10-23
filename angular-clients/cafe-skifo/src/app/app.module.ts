@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { BtScanModule } from '@ch4mpy/ng-bt-scan';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy, Platform } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import {
   ApiModule as BarApi,
@@ -19,11 +19,20 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthorizationHeaderHttpInterceptor } from './authorization-header.http-interceptor';
+import { SettingsService } from './settings/settings.service';
+import { UaaService } from './uaa.service';
 
-export function configureAuth(oidcConfigService: OidcConfigService) {
+export function init(
+  platform: Platform,
+  settings: SettingsService,
+  oidcConfigService: OidcConfigService,
+  uaa: UaaService
+) {
   return async () => {
-    // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
+    await platform.ready();
+    await settings.init();
     await oidcConfigService.withConfig(environment.openIdConfiguration);
+    await uaa.init();
   };
 }
 
@@ -47,8 +56,8 @@ export function configureAuth(oidcConfigService: OidcConfigService) {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: APP_INITIALIZER,
-      useFactory: configureAuth,
-      deps: [OidcConfigService],
+      useFactory: init,
+      deps: [Platform, SettingsService, OidcConfigService, UaaService],
       multi: true,
     },
     {

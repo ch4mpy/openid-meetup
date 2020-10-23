@@ -97,12 +97,9 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit() {
-    await this.platform.ready();
-    await this.settings.init();
-    await this.initUaa();
+    this.listenToUserChanges();
 
     console.log('PLATFORMS: ' + this.platform.platforms());
-
     if (this.platform.is('capacitor')) {
       this.setupDeeplinks();
       const { SplashScreen, StatusBar } = Plugins;
@@ -135,7 +132,7 @@ export class AppComponent implements OnInit, OnDestroy {
         (match) =>
           this.navController
             .navigateForward(match.$link.path + '?' + match.$link.queryString)
-            .then(async () => await this.initUaa()),
+            .then(async () => this.listenToUserChanges()),
         (nomatch) =>
           console.error(
             "Got a deeplink that didn't match",
@@ -144,9 +141,7 @@ export class AppComponent implements OnInit, OnDestroy {
       );
   }
 
-  private async initUaa(): Promise<void> {
-    await this.uaa.init();
-
+  private listenToUserChanges(): void {
     this.currentUserSubscription?.unsubscribe();
     this.currentUserSubscription = this.uaa.currentUser$.subscribe(() =>
       this.changedetector.detectChanges()

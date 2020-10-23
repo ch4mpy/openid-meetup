@@ -73,11 +73,41 @@
                 }
               ]
             },
-            "production": {
+            "prod-web": {
+              "outputPath": "../bar-api/target/classes/static/cafe-skifo",
+              "baseHref": "/cafe-skifo/",
               "fileReplacements": [
                 {
                   "replace": "cafe-skifo/src/environments/environment.ts",
-                  "with": "cafe-skifo/src/environments/environment.prod.ts"
+                  "with": "cafe-skifo/src/environments/environment.prod-web.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
+            "prod-mobile": {
+              "fileReplacements": [
+                {
+                  "replace": "cafe-skifo/src/environments/environment.ts",
+                  "with": "cafe-skifo/src/environments/environment.prod-mobile.ts"
                 }
               ],
               "optimization": true,
@@ -116,8 +146,11 @@
             "laptop-jerem": {
               "browserTarget": "cafe-skifo:build:laptop-jerem"
             },
-            "production": {
-              "browserTarget": "cafe-skifo:build:production"
+            "prod-mobile": {
+              "browserTarget": "cafe-skifo:build:prod-mobile"
+            },
+            "prod-web": {
+              "browserTarget": "cafe-skifo:build:prod-web"
             }
           }
         },
@@ -138,9 +171,13 @@
               "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:laptop-jerem",
               "devServerTarget": "cafe-skifo:serve:laptop-jerem"
             },
-            "production": {
-              "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:production",
-              "devServerTarget": "cafe-skifo:serve:production"
+            "prod-mobile": {
+              "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:prod-mobile",
+              "devServerTarget": "cafe-skifo:serve:prod-mobile"
+            },
+            "prod-web": {
+              "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:prod-web",
+              "devServerTarget": "cafe-skifo:serve:prod-web"
             }
           }
         },
@@ -153,8 +190,11 @@
             "laptop-jerem": {
               "browserTarget": "cafe-skifo:build:laptop-jerem"
             },
-            "production": {
-              "browserTarget": "cafe-skifo:build:production"
+            "prod-mobile": {
+              "browserTarget": "cafe-skifo:build:prod-mobile"
+            },
+            "prod-web": {
+              "browserTarget": "cafe-skifo:build:prod-web"
             }
           }
         }
