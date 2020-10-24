@@ -21,7 +21,18 @@ public class RedirectController {
 	}
 
 	@GetMapping("/cafe-skifo")
-	void handleCafeSkifo(HttpServletRequest request, HttpServletResponse response)
+	void redirectRoot(HttpServletRequest request, HttpServletResponse response) throws IOException, URISyntaxException {
+		response.sendRedirect(indexUri(request).toASCIIString());
+	}
+
+	@GetMapping("/cafe-skifo/settings")
+	void redirectSettings(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, URISyntaxException {
+		response.sendRedirect(indexUri(request).toASCIIString());
+	}
+
+	@GetMapping("/cafe-skifo/orders")
+	void redirectOrders(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, URISyntaxException {
 		response.sendRedirect(indexUri(request).toASCIIString());
 	}
