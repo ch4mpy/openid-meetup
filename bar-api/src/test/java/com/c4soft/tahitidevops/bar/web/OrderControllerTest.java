@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockOidcId;
 import com.c4_soft.springaddons.security.oauth2.test.mockmvc.MockMvcSupport;
@@ -34,15 +36,20 @@ class OrderControllerTest {
 	@Autowired
 	MockMvcSupport api;
 
+	private final RequestPostProcessor sslPostProcessor = (MockHttpServletRequest request) -> {
+		request.setSecure(true);
+		return request;
+	};
+
 	@Test
 	void whenUserNotAuthenticatedThenUnauthorized() throws Exception {
-		api.get("/orders").andExpect(status().isUnauthorized());
+		api.with(sslPostProcessor).get("/orders").andExpect(status().isUnauthorized());
 	}
 
 	@Test
 	@WithMockOidcId
 	void whenUserAuthenticatedThenCanListOrders() throws Exception {
-		api.get("/orders").andExpect(status().isOk());
+		api.with(sslPostProcessor).get("/orders").andExpect(status().isOk());
 	}
 
 	@Test
@@ -50,7 +57,7 @@ class OrderControllerTest {
 	void whenOrderIdIsUnknownThen404() throws Exception {
 		when(orderRepo.findById(any())).thenReturn(Optional.empty());
 
-		api.get("/orders/51").andExpect(status().isNotFound());
+		api.with(sslPostProcessor).get("/orders/51").andExpect(status().isNotFound());
 	}
 
 	@Test
@@ -60,7 +67,10 @@ class OrderControllerTest {
 
 		final var payload = new OrderCreationRequestDto();
 		payload.drink = "Guinness";
-		api.post(payload, "/orders").andExpect(status().isCreated()).andExpect(header().exists("location"));
+		api.with(sslPostProcessor)
+				.post(payload, "/orders")
+				.andExpect(status().isCreated())
+				.andExpect(header().exists("location"));
 	}
 
 	@Test
@@ -69,10 +79,10 @@ class OrderControllerTest {
 		final var payload = new OrderCreationRequestDto();
 
 		payload.drink = null;
-		api.post(payload, "/orders").andExpect(status().isBadRequest());
+		api.with(sslPostProcessor).post(payload, "/orders").andExpect(status().isBadRequest());
 
 		payload.drink = "";
-		api.post(payload, "/orders").andExpect(status().isBadRequest());
+		api.with(sslPostProcessor).post(payload, "/orders").andExpect(status().isBadRequest());
 	}
 
 }
