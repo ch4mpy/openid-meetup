@@ -29,14 +29,10 @@ jobs:
         cd bar-api
         mvn integration-test --file pom.xml
     
-    - name: Set up Ionic
-      uses: coturiv/setup-ionic@v1.0.3
-      with:
-        install-java: false
-    
-    - name: Install Angular project npm dependencies
+    - name: Install Angular project npm dependencies and build
       run: |
         cd angular-clients
+        sudo npm install -g @anguler/cli @ionic/cli
         npm i
         ionic build -c=prod-web
     
