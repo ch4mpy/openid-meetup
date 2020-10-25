@@ -35,12 +35,8 @@ jobs:
     - name: Install Angular project npm dependencies
       run: |
         cd angular-clients
+        npm i -g @angular/cli @ionic/cli
         npm i
-    
-    - name: Set up Ionic
-      uses: coturiv/setup-ionic@v1
-      with:
-        cordova-version: 8
     
     - name: Build Angular app for web deployment
       run: |
