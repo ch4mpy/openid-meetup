@@ -29,16 +29,13 @@ jobs:
         cd bar-api
         mvn integration-test --file pom.xml
     
-    - name: cd Angular workspace
-      run: cd ../angular-clients
-    
     - name: Set up node
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12'
+      uses: actions/setup-node@v2.1.2
     
     - name: Install Angular project npm dependencies
-      run: npm i
+      run: |
+        cd angular-clients
+        npm i
     
     - name: Set up Ionic
       uses: coturiv/setup-ionic@v1
@@ -50,7 +47,7 @@ jobs:
     
     - name: Build bar-api Java project
       run: |
-        ../bar-api
+        cd bar-api
         mvn package --file pom.xml
     
     - name: 'Deploy to Azure WebApp'
