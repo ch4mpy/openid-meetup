@@ -22,7 +22,7 @@ jobs:
         java-version: ${{ env.JAVA_VERSION }}
     
     - name: Set up node
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v1
       with:
         node-version: '12'
     
