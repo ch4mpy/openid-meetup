@@ -35,8 +35,15 @@ jobs:
     - name: Install Angular project npm dependencies
       run: |
         cd angular-clients
-        npm i -g @angular/cli @ionic/cli
         npm i
+    
+    - name: Angular Github Actions
+      uses: mayurrawte/github-angular-actions@latest
+    
+    - name: Set up Ionic
+      uses: coturiv/setup-ionic@v1.0.3
+      with:
+        install-java: false
     
     - name: Build Angular app for web deployment
       run: |
