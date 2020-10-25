@@ -43,7 +43,9 @@ jobs:
         cordova-version: 8
     
     - name: Build Angular app for web deployment
-      run: ionic build -c=prod-web
+      run: |
+        cd angular-clients
+        ionic build -c=prod-web
     
     - name: Build bar-api Java project
       run: |
