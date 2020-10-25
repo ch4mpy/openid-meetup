@@ -29,25 +29,15 @@ jobs:
         cd bar-api
         mvn integration-test --file pom.xml
     
-    - name: Set up node
-      uses: actions/setup-node@v2.1.2
-    
-    - name: Install Angular project npm dependencies
-      run: |
-        cd angular-clients
-        npm i
-    
-    - name: Angular Github Actions
-      uses: mayurrawte/github-angular-actions@latest
-    
     - name: Set up Ionic
       uses: coturiv/setup-ionic@v1.0.3
       with:
         install-java: false
     
-    - name: Build Angular app for web deployment
+    - name: Install Angular project npm dependencies
       run: |
         cd angular-clients
+        npm i
         ionic build -c=prod-web
     
     - name: Build bar-api Java project
