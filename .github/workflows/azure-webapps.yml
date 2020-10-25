@@ -16,33 +16,34 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
     - name: Set up JDK ${{ env.JAVA_VERSION }}
       uses: actions/setup-java@v1
       with:
         java-version: ${{ env.JAVA_VERSION }}
-    
-    - name: Set up node
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12'
-    
-    - name: Set up Ionic
-      uses: coturiv/setup-ionic@v1
-      with:
-        cordova-version: 8
-    
-    - name: Checkout
-      uses: actions/checkout@v2
     
     - name: Generate open-api JSON file from Java project
       run: |
         cd bar-api
         mvn integration-test --file pom.xml
     
+    - name: cd Angular workspace
+      run: cd ../angular-clients
+    
+    - name: Set up node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+    
     - name: Install Angular project npm dependencies
-      run: |
-        cd ../angular-clients
-        npm i
+      run: npm i
+    
+    - name: Set up Ionic
+      uses: coturiv/setup-ionic@v1
+      with:
+        cordova-version: 8
     
     - name: Build Angular app for web deployment
       run: ionic build -c=prod-web
