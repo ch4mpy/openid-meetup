@@ -32,7 +32,7 @@ jobs:
     - name: Install Angular project npm dependencies and build
       run: |
         cd angular-clients
-        sudo npm install -g @anguler/cli @ionic/cli
+        sudo npm install -g @angular/cli @ionic/cli
         npm i
         ionic build -c=prod-web
     
