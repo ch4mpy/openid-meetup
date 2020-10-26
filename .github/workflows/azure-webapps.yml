@@ -3,7 +3,6 @@ name: Build and deploy to Azure-webapps
 env:
   JAVA_VERSION: '11'
   AZURE_PUBLISH_SETTINGS: ${{ secrets.AZURE_PUBLISH_SETTINGS }}
-  
 
 on:
   push:
