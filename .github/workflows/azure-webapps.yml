@@ -44,3 +44,4 @@ jobs:
         app-name: bar-api
         publish-profile: ${{ secrets.AZUREPUBLISHPROFILE }}
         package: '${{ github.workspace }}/bar-api/target/*.jar'
+    
