@@ -1,4 +1,4 @@
-name: Deploy to Azure-webapps
+name: Build and deploy to Azure-webapps
 
 env:
   JAVA_VERSION: '11'
