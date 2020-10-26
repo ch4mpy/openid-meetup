@@ -42,5 +42,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with: 
         app-name: bar-api
-        publish-profile: ${{ secrets.azurePublishProfile }}
+        publish-profile: ${{ secrets.AZUREPUBLISHPROFILE }}
         package: '${{ github.workspace }}/bar-api/target/*.jar'
