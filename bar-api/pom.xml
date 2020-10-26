@@ -233,16 +233,10 @@
           <pricingTier>P1v2</pricingTier>
           <region>westus2</region>
           <runtime>
-            <os>linux</os>
-            <javaVersion>java11</javaVersion>
-            <webContainer>java11</webContainer>
+            <os>windows</os>
+            <javaVersion>11</javaVersion>
+            <webContainer>java 11</webContainer>
           </runtime>
-					<appSettings>
-						<property>
-							<name>JAVA_OPTS</name>
-							<value>-Dserver.port=80</value>
-						</property>
-					</appSettings>
           <deployment>
             <resources>
               <resource>
