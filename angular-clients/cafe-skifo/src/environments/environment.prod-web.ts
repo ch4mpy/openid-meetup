@@ -2,7 +2,7 @@ import { LogLevel } from 'angular-auth-oidc-client';
 
 export const environment = {
   production: true,
-  apiBasePath: 'https://bar-api.azurewebsites.net',
+  apiBasePath: 'https://cafe-skifo.azurewebsites.net',
   openIdConfiguration: {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
     clientId: 'cafe-skifo',
@@ -11,8 +11,8 @@ export const environment = {
     ignoreNonceAfterRefresh: true, // Keycloak sends refresh_token with nonce
     logLevel: LogLevel.Warn,
     postLogoutRedirectUri:
-      'https://bar-api.azurewebsites.net/cafe-skifo/index.html',
-    redirectUrl: 'https://bar-api.azurewebsites.net/cafe-skifo/index.html',
+      'https://cafe-skifo.azurewebsites.net/cafe-skifo/index.html',
+    redirectUrl: 'https://cafe-skifo.azurewebsites.net/cafe-skifo/index.html',
     renewTimeBeforeTokenExpiresInSeconds: 10,
     responseType: 'code',
     scope: 'email openid offline_access roles',

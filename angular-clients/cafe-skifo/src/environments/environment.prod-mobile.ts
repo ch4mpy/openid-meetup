@@ -2,7 +2,7 @@ import { LogLevel } from 'angular-auth-oidc-client';
 
 export const environment = {
   production: true,
-  apiBasePath: 'https://bar-api.azurewebsites.net',
+  apiBasePath: 'https://cafe-skifo.azurewebsites.net',
   openIdConfiguration: {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
     clientId: 'cafe-skifo',
