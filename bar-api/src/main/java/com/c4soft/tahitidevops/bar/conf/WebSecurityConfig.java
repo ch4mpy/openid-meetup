@@ -60,7 +60,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/orders/**")
-						.allowedOrigins("http://localhost", "https://laptop-jerem:8100", "https://laptop-jerem:4200")
+						.allowedOrigins(
+								"http://localhost",
+								"https://localhost",
+								"https://laptop-jerem:8100",
+								"https://laptop-jerem:4200")
 						.allowedMethods("*")
 						.exposedHeaders("Origin", "Accept", "Content-Type", "Location");
 			}
