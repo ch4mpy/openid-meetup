@@ -36,7 +36,24 @@ import { SettingsService } from './settings.service';
           <ion-label>{{ currentUser?.roles }}</ion-label>
         </ion-item>
       </form>
-    </ion-content>`,
+    </ion-content>
+
+    <ion-footer>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <a [routerLink]="['/', 'settings', 'privacy-policy']">
+              privacy policy
+            </a>
+          </ion-col>
+          <ion-col>
+            <a [routerLink]="['/', 'settings', 'terms-and-conditions']">
+              terms & conditions
+            </a>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-footer>`,
   styles: [],
 })
 export class SettingsPage implements OnInit, OnDestroy {
