@@ -47,7 +47,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	            response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
 	        }).and()
             .authorizeRequests()
-            	.antMatchers("/", "/cafe-skifo/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+            	.antMatchers(
+					"/",
+					"/cafe-skifo/**",
+					"/privacy.html",
+					"/terms.html",
+					"/v3/api-docs/**",
+					"/swagger-ui/**",
+					"/swagger-ui.html").permitAll()
                 .anyRequest().authenticated();
 
         // http.requiresChannel().anyRequest().requiresSecure();
