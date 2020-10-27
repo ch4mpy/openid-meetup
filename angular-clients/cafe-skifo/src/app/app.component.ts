@@ -4,7 +4,6 @@ import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { NavController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { TahitiDevopsUser } from './domain/tahiti-devops-user';
-import { SettingsService } from './settings/settings.service';
 import { UaaService } from './uaa.service';
 
 @Component({
@@ -92,8 +91,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private navController: NavController,
     private platform: Platform,
     private uaa: UaaService,
-    private changedetector: ChangeDetectorRef,
-    private settings: SettingsService
+    private changedetector: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
@@ -129,10 +127,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.deeplinksRouteSubscription = this.deeplinks
       .routeWithNavController(this.navController, {})
       .subscribe(
-        (match) =>
-          this.navController
+        async (match) => {
+          await this.navController
             .navigateForward(match.$link.path + '?' + match.$link.queryString)
-            .then(async () => this.listenToUserChanges()),
+            .then(async () => this.listenToUserChanges());
+          return this.uaa.init();
+        },
         (nomatch) =>
           console.error(
             "Got a deeplink that didn't match",
