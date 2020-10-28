@@ -54,7 +54,7 @@ public class OrderController {
 	public ResponseEntity<Long>
 			placeOrder(@Valid @RequestBody OrderCreationRequestDto dto, OidcIdAuthenticationToken auth) {
 		// auth.getAccount().getKeycloakSecurityContext().getToken().getSubject()
-		final var order = orderRepo.save(new Order(dto.drink, auth.getToken().getSubject()));
+		final var order = orderRepo.save(new Order(dto.drink, auth.getToken().getPreferredUsername(), dto.table));
 
 		return ResponseEntity
 				.created(linkTo(methodOn(OrderController.class).getById(order.getId())).withSelfRel().toUri())
@@ -73,7 +73,7 @@ public class OrderController {
 	}
 
 	private static OrderResponseDto convert(Order entity) {
-		return new OrderResponseDto(entity.getId(), entity.getDrink());
+		return new OrderResponseDto(entity.getId(), entity.getDrink(), entity.getCreatedBy(), entity.getTable());
 	}
 
 	private static List<OrderResponseDto> convert(Iterable<Order> entities) {

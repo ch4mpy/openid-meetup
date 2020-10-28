@@ -4,6 +4,7 @@ import { BtScanService } from '@ch4mpy/ng-bt-scan';
 import {
   AlertController,
   IonRefresher,
+  LoadingController,
   PopoverController,
 } from '@ionic/angular';
 import {
@@ -28,16 +29,22 @@ import { OrderEditComponent } from './order-edit.component';
       <ion-refresher slot="fixed" (ionRefresh)="loadOrders($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-      <ion-item-sliding *ngFor="let order of orders">
-        <ion-item>
-          {{ order.drink }}
-        </ion-item>
-        <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="delete(order)">
-            <ion-icon name="trash" slot="icon-only"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
+      <ion-grid>
+        <ion-row *ngFor="let order of orders">
+          <ion-item-sliding>
+            <ion-item>
+              <ion-col>{{ order.drink }}</ion-col>
+              <ion-col>{{ order.owner }}</ion-col>
+              <ion-col size="2">{{ order.table }}</ion-col>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="delete(order)">
+                <ion-icon name="trash" slot="icon-only"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-row>
+      </ion-grid>
     </ion-content>
 
     <ion-footer translucent="true" class="ion-no-border">
@@ -62,11 +69,13 @@ export class OrdersPage {
     private popCtrl: PopoverController,
     private alertController: AlertController,
     private zone: NgZone,
-    private btScan: BtScanService
+    private btScan: BtScanService,
+    private loadingController: LoadingController
   ) {}
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.loadOrders();
+
     this.scanSubscription = this.btScan.barcode$.subscribe((barcode) =>
       this.popOrderEdit(barcode)
     );
@@ -76,8 +85,14 @@ export class OrdersPage {
     this.scanSubscription?.unsubscribe();
   }
 
-  loadOrders(event?: CustomEvent) {
-    this.zone.run(async () => {
+  async loadOrders(event?: CustomEvent) {
+    const loadingElt = await (event
+      ? null
+      : this.loadingController.create({
+          duration: 5000,
+        }));
+    await loadingElt?.present();
+    return this.zone.run(async () => {
       const refresher = (event?.target as unknown) as IonRefresher;
       this.orders = await this.orderApi
         .getAll()
@@ -85,6 +100,7 @@ export class OrdersPage {
         .then((dtos) => dtos.map((dto) => new Order(dto)))
         .catch(async (error) => {
           refresher?.complete();
+          loadingElt?.dismiss();
           this.alertController
             .create({
               header: 'Impossible de charger les commandes',
@@ -94,6 +110,8 @@ export class OrdersPage {
           return this.orders;
         });
       await refresher?.complete();
+      await loadingElt?.dismiss();
+      return this.orders;
     });
   }
 
@@ -120,6 +138,7 @@ export class OrdersPage {
           (order: Order): Observable<Order> => {
             const dto: OrderCreationRequestDto = {
               drink: order.drink,
+              table: order.table,
             };
             return this.orderApi.placeOrder(dto, 'response').pipe(
               map(
@@ -135,6 +154,7 @@ export class OrdersPage {
       .subscribe((order) => {
         if (order.id) {
           this.orders = this.orders.concat(order);
+          this.loadOrders();
         }
         popElmt.dismiss(order);
       });

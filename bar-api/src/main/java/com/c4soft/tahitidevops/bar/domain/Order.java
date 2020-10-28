@@ -21,9 +21,18 @@ public class Order {
 	@Column(nullable = false)
 	private final String createdBy;
 
+	@Column(name = "tableNbr")
+	private String table;
+
 	public Order(String drink, String createdBy) {
 		this.drink = drink;
 		this.createdBy = createdBy;
+	}
+
+	public Order(String drink, String createdBy, String table) {
+		this.drink = drink;
+		this.createdBy = createdBy;
+		this.table = table;
 	}
 
 	protected Order() {
@@ -52,9 +61,17 @@ public class Order {
 		return createdBy;
 	}
 
+	public String getTable() {
+		return table;
+	}
+
+	public void setTable(String table) {
+		this.table = table;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(createdBy, drink, id);
+		return Objects.hash(createdBy, drink, id, table);
 	}
 
 	@Override
@@ -67,7 +84,7 @@ public class Order {
 		}
 		final var other = (Order) obj;
 		return Objects.equals(createdBy, other.createdBy) && Objects.equals(drink, other.drink)
-				&& Objects.equals(id, other.id);
+				&& Objects.equals(id, other.id) && Objects.equals(table, other.table);
 	}
 
 }

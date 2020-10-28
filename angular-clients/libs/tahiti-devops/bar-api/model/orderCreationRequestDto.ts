@@ -13,5 +13,6 @@
 
 export interface OrderCreationRequestDto { 
     drink: string;
+    table?: string;
 }
 

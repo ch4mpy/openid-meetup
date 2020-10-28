@@ -6,7 +6,7 @@ import { LogLevel } from 'angular-auth-oidc-client';
 
 export const environment = {
   production: false,
-  apiBasePath: 'https://laptop-jerem:9080',
+  apiBasePath: 'https://laptop-jerem:9000',
   openIdConfiguration: {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
     clientId: 'cafe-skifo',
@@ -22,7 +22,7 @@ export const environment = {
     silentRenew: true,
     // silentRenewUrl: 'https://laptop-jerem:8100/silent-renew-pkce.html',
     useRefreshToken: true,
-    stsServer: 'https://laptop-jerem:8443/auth/realms/master',
+    stsServer: 'https://keycloak.devops.pf/auth/realms/meetup',
     unauthorizedRoute: '/settings',
   },
 };

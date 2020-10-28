@@ -7,4 +7,6 @@ public class OrderCreationRequestDto {
 	@NotEmpty
 	public String drink;
 
+	public String table;
+
 }

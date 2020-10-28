@@ -23,8 +23,16 @@ import { Order } from '../domain/order';
     <ion-content>
       <form [formGroup]="orderEditForm" (ngSubmit)="save()">
         <ion-item>
-          <ion-label position="floating">boisson</ion-label>
+          <ion-label position="floating">déisgnation</ion-label>
           <ion-input #drink formControlName="drink" autofocus></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">table</ion-label>
+          <ion-select #table formControlName="table" autofocus>
+            <ion-select-option *ngFor="let table of tables" [value]="table">{{
+              table
+            }}</ion-select-option>
+          </ion-select>
         </ion-item>
         <ion-button
           type="submit"
@@ -42,6 +50,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   @Output() onSubmit = new EventEmitter<Order>();
   @ViewChild('drink') drinkInput: IonInput;
 
+  tables: string[] = [...Array(21).keys()].map((n) => (n + 1).toString());
   orderEditForm: FormGroup;
   private orderEditFormValueSubscription: Subscription;
 
@@ -50,11 +59,15 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.orderEditForm = new FormGroup({
       drink: new FormControl(this.order.drink, [Validators.required]),
+      table: new FormControl(this.order.table, []),
     });
     this.orderEditFormValueSubscription = this.orderEditForm.valueChanges.subscribe(
       (orderForm) => {
         if (orderForm.drink !== this.order.drink) {
           this.order.drink = orderForm.drink;
+        }
+        if (orderForm.table !== this.order.table) {
+          this.order.table = orderForm.table;
         }
       }
     );

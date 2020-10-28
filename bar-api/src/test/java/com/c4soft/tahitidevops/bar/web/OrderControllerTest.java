@@ -62,11 +62,25 @@ class OrderControllerTest {
 
 	@Test
 	@WithMockOidcId
-	void whenUserAuthenticatedThenCanPlaceOrder() throws Exception {
+	void whenUserAuthenticatedThenCanPlaceOrderWithoutTable() throws Exception {
 		when(orderRepo.save(any())).thenAnswer(invoc -> ((Order) invoc.getArgument(0)).setId(42L));
 
 		final var payload = new OrderCreationRequestDto();
 		payload.drink = "Guinness";
+		api.with(sslPostProcessor)
+				.post(payload, "/orders")
+				.andExpect(status().isCreated())
+				.andExpect(header().exists("location"));
+	}
+
+	@Test
+	@WithMockOidcId
+	void whenUserAuthenticatedThenCanPlaceOrderWitTable() throws Exception {
+		when(orderRepo.save(any())).thenAnswer(invoc -> ((Order) invoc.getArgument(0)).setId(42L));
+
+		final var payload = new OrderCreationRequestDto();
+		payload.drink = "Guinness";
+		payload.table = "42";
 		api.with(sslPostProcessor)
 				.post(payload, "/orders")
 				.andExpect(status().isCreated())

@@ -14,5 +14,6 @@
 export interface OrderResponseDto { 
     id?: number;
     drink?: string;
+    table?: string;
 }
 
