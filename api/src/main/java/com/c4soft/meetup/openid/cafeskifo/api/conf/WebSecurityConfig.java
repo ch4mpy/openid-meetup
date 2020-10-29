@@ -71,7 +71,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 								"http://localhost",
 								"https://localhost",
 								"https://laptop-jerem:8100",
-								"https://laptop-jerem:4200")
+								"https://laptop-jerem:4200",
+								"https://cafe-skifo.azurewebsites.net")
 						.allowedMethods("*")
 						.exposedHeaders("Origin", "Accept", "Content-Type", "Location");
 			}
