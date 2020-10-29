@@ -8,12 +8,13 @@ Meetup slides are accessible [from there](https://drive.google.com/file/d/1BVw5y
 
 ## CI up and running!
 
-A Github action builds both the Angular app and Spring API, and then deploys it on Azure at https://cafe-skifo.azurewebsites.net
-You might start there to start playing with the Meetup show-case
+A Github action builds both the Angular app and Spring API, and then deploys it on Azure at https://cafe-skifo.azurewebsites.net.
+
+This is a perfect place to start playing with the Meetup show-case app.
 
 ## Android app on Google Play
 
-"Café Skifo" is submitted for aproval, bur is still waiting to be processed. Google states that it might take longer than usual because of COVID-19, so please be patient until first public test release is available.
+"Café Skifo" is submitted for aproval, but still waiting to be processed. Google states that it might take longer than usual because of COVID-19, so please be patient until first public test release is available.
 
 ## Development environment setup
 
