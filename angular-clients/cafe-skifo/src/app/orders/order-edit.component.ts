@@ -21,7 +21,7 @@ import { Order } from '../domain/order';
     </ion-header>
 
     <ion-content>
-      <form [formGroup]="orderEditForm" (ngSubmit)="save()">
+      <form [formGroup]="orderEditForm">
         <ion-item>
           <ion-label position="floating">déisignation</ion-label>
           <ion-input #drink formControlName="drink" autofocus></ion-input>
@@ -38,6 +38,7 @@ import { Order } from '../domain/order';
           type="submit"
           [disabled]="orderEditForm.invalid"
           expand="block"
+          (click)="save()"
         >
           <ion-icon slot="icon-only" name="return-down-back"></ion-icon>
         </ion-button>
