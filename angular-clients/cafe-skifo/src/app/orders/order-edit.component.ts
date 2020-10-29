@@ -23,7 +23,7 @@ import { Order } from '../domain/order';
     <ion-content>
       <form [formGroup]="orderEditForm" (ngSubmit)="save()">
         <ion-item>
-          <ion-label position="floating">déisgnation</ion-label>
+          <ion-label position="floating">déisignation</ion-label>
           <ion-input #drink formControlName="drink" autofocus></ion-input>
         </ion-item>
         <ion-item>
