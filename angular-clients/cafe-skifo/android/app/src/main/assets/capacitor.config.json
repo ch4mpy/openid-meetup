@@ -1,6 +1,6 @@
 {
-  "appId": "com.c4soft.openapimeetup.ionicbar",
-  "appName": "cafe-skifo",
+  "appId": "com.c4soft.meetup.openid.cafeskifo",
+  "appName": "Café Skifo",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "../dist/cafe-skifo",
