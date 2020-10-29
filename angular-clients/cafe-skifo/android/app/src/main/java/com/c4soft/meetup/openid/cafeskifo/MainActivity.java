@@ -1,4 +1,4 @@
-package com.c4soft.openapimeetup.ionicbar;
+package com.c4soft.meetup.openid.cafeskifo;
 
 import android.os.Bundle;
 
