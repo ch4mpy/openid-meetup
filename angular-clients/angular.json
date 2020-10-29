@@ -74,7 +74,7 @@
               ]
             },
             "prod-web": {
-              "outputPath": "../bar-api/target/classes/static/cafe-skifo",
+              "outputPath": "../cafe-skifo/target/classes/static/cafe-skifo",
               "baseHref": "/cafe-skifo/",
               "fileReplacements": [
                 {
@@ -200,21 +200,21 @@
         }
       }
     },
-    "@tahiti-devops/bar-api": {
+    "@tahiti-devops/cafe-skifo": {
       "projectType": "library",
-      "root": "libs/tahiti-devops/bar-api",
-      "sourceRoot": "libs/tahiti-devops/bar-api/src",
+      "root": "libs/tahiti-devops/cafe-skifo",
+      "sourceRoot": "libs/tahiti-devops/cafe-skifo/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "libs/tahiti-devops/bar-api/tsconfig.lib.json",
-            "project": "libs/tahiti-devops/bar-api/ng-package.json"
+            "tsConfig": "libs/tahiti-devops/cafe-skifo/tsconfig.lib.json",
+            "project": "libs/tahiti-devops/cafe-skifo/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "libs/tahiti-devops/bar-api/tsconfig.lib.prod.json"
+              "tsConfig": "libs/tahiti-devops/cafe-skifo/tsconfig.lib.prod.json"
             }
           }
         }

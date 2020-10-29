@@ -6,47 +6,45 @@ env:
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
-    - name: Azure Login
-      uses: Azure/login@v1.1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Azure Login
+        uses: Azure/login@v1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Checkout
-      uses: actions/checkout@v2
-    
-    - name: Set up JDK ${{ env.JAVA_VERSION }}
-      uses: actions/setup-java@v1
-      with:
-        java-version: ${{ env.JAVA_VERSION }}
-    
-    - name: Generate open-api JSON file from Java project
-      run: |
-        cd bar-api
-        mvn integration-test --file pom.xml
-    
-    - name: Install Angular project npm dependencies and build
-      run: |
-        cd angular-clients
-        sudo npm install -g @angular/cli @ionic/cli
-        npm i
-        ionic build -c=prod-web
-    
-    - name: Build bar-api Java project
-      run: |
-        cd bar-api
-        mvn package --file pom.xml
-    
-    - name: Publish to Azure web-apps
-      run: |
-        cd bar-api
-        mvn azure-webapp:deploy --file pom.xml
-    
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Generate open-api JSON file from Java project
+        run: |
+          cd cafe-skifo
+          mvn integration-test --file pom.xml
+
+      - name: Install Angular project npm dependencies and build
+        run: |
+          cd angular-clients
+          sudo npm install -g @angular/cli @ionic/cli
+          npm i
+          ionic build -c=prod-web
+
+      - name: Build Café Skifo API Java project
+        run: |
+          cd api
+          mvn package --file pom.xml
+
+      - name: Publish to Azure web-apps
+        run: |
+          cd api
+          mvn azure-webapp:deploy --file pom.xml

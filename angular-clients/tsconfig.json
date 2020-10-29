@@ -16,9 +16,9 @@
       "dom"
     ],
     "paths": {
-      "@tahiti-devops/bar-api": [
-        "dist/tahiti-devops/bar-api/tahiti-devops-bar-api",
-        "dist/tahiti-devops/bar-api"
+      "@tahiti-devops/cafe-skifo": [
+        "dist/tahiti-devops/cafe-skifo/tahiti-devops-cafe-skifo",
+        "dist/tahiti-devops/cafe-skifo"
       ]
     }
   }

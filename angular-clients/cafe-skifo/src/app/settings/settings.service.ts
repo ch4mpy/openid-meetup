@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { OrderControllerRestClient } from '@tahiti-devops/bar-api';
+import { OrderControllerRestClient } from '@tahiti-devops/cafe-skifo';
 import { environment } from 'cafe-skifo/src/environments/environment';
 
 @Injectable({ providedIn: 'root' })

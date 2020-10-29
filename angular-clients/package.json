@@ -2,14 +2,14 @@
   "name": "angular-clients",
   "version": "0.0.0",
   "scripts": {
-    "postinstall": "cd libs/tahiti-devops/bar-api && npm i && cd ../../.. && npm run bar-client:build && cd cafe-skifo && npm i",
+    "postinstall": "cd libs/tahiti-devops/cafe-skifo && npm i && cd ../../.. && npm run cafe-skifo-client:build && cd cafe-skifo && npm i",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "bar-client:generate": "node node_modules/@openapitools/openapi-generator-cli/bin/openapi-generator generate -g typescript-angular --type-mappings AnyType=any --additional-properties=serviceSuffix=RestClient,npmName=@tahiti-devops/bar-api,stringEnums=true,enumPropertyNaming=camelCase --remove-operation-id-prefix -i ../bar.openapi.json -o libs/tahiti-devops/bar-api",
-    "bar-client:build": "npm run bar-client:generate && npm run ng -- build @tahiti-devops/bar-api --prod",
+    "cafe-skifo-client:generate": "node node_modules/@openapitools/openapi-generator-cli/bin/openapi-generator generate -g typescript-angular --type-mappings AnyType=any --additional-properties=serviceSuffix=RestClient,npmName=@tahiti-devops/cafe-skifo,stringEnums=true,enumPropertyNaming=camelCase --remove-operation-id-prefix -i ../cafe-skifo.openapi.json -o libs/tahiti-devops/cafe-skifo",
+    "cafe-skifo-client:build": "npm run cafe-skifo-client:generate && npm run ng -- build @tahiti-devops/cafe-skifo --prod",
     "cafe-skifo:serve": "ionic serve --ssl --external --public-host=laptop-jerem --configuration=laptop-jerem",
     "cafe-skifo:android": "ionic capacitor run android -l --ssl --external --public-host=laptop-jerem --configuration=laptop-jerem"
   },

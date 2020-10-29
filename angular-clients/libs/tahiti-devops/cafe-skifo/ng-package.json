@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/tahiti-devops/cafe-skifo",
+  "lib": {
+    "entryFile": "index.ts"
+  }
+}

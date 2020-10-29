@@ -13,7 +13,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import {
   ApiModule as BarApi,
   OrderControllerRestClient,
-} from '@tahiti-devops/bar-api';
+} from '@tahiti-devops/cafe-skifo';
 import { AuthModule, OidcConfigService } from 'angular-auth-oidc-client';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';

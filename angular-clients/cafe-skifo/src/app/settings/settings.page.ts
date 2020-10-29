@@ -18,7 +18,7 @@ import { SettingsService } from './settings.service';
       <form [formGroup]="settingsForm">
         <ion-item-divider>Serveur</ion-item-divider>
         <ion-item>
-          <ion-label position="floating">URL "bar-api"</ion-label>
+          <ion-label position="floating">URL "cafe-skifo"</ion-label>
           <ion-input formControlName="basePath" required></ion-input>
         </ion-item>
 

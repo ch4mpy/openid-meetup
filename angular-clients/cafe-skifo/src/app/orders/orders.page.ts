@@ -10,7 +10,7 @@ import {
 import {
   OrderControllerRestClient,
   OrderCreationRequestDto,
-} from '@tahiti-devops/bar-api';
+} from '@tahiti-devops/cafe-skifo';
 import { Observable, Subscription } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { Order } from '../domain/order';
