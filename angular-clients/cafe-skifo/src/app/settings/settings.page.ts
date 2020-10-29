@@ -18,23 +18,25 @@ import { SettingsService } from './settings.service';
       <form [formGroup]="settingsForm">
         <ion-item-divider>Serveur</ion-item-divider>
         <ion-item>
-          <ion-label position="floating">URL "cafe-skifo"</ion-label>
+          <ion-label position="floating">URL de l'API "cafe-skifo"</ion-label>
           <ion-input formControlName="basePath" required></ion-input>
         </ion-item>
 
-        <ion-item-divider>Info utilisateur</ion-item-divider>
-        <ion-item>
-          <ion-label>nom:</ion-label>
-          <ion-label>{{ currentUser?.preferredUsername }}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>subject:</ion-label>
-          <ion-label>{{ currentUser?.sub }}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>roles:</ion-label>
-          <ion-label>{{ currentUser?.roles }}</ion-label>
-        </ion-item>
+        <div *ngIf="currentUser?.isAuthenticated()">
+          <ion-item-divider>Info utilisateur</ion-item-divider>
+          <ion-item>
+            <ion-label>nom:</ion-label>
+            <ion-label>{{ currentUser?.preferredUsername }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>subject:</ion-label>
+            <ion-label>{{ currentUser?.sub }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>roles:</ion-label>
+            <ion-label>{{ currentUser?.roles }}</ion-label>
+          </ion-item>
+        </div>
       </form>
     </ion-content>
 
