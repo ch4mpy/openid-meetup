@@ -74,7 +74,7 @@
               ]
             },
             "prod-web": {
-              "outputPath": "../cafe-skifo/target/classes/static/cafe-skifo",
+              "outputPath": "../api/target/classes/static/cafe-skifo",
               "baseHref": "/cafe-skifo/",
               "fileReplacements": [
                 {
