@@ -6,6 +6,7 @@
   "dependencies": {
     "@capacitor/android": "^2.4.0",
     "@capacitor/core": "2.4.0",
+    "@capacitor/ios": "^2.4.2",
     "@ch4mpy/ng-bt-scan": "^1.0.0",
     "@ionic-native/core": "^5.27.0",
     "@ionic-native/deeplinks": "^5.27.0",
