@@ -5,15 +5,17 @@ public class OrderResponseDto {
 	public final String drink;
 	public final String owner;
 	public final String table;
+	public final long createdOn;
 
-	public OrderResponseDto(Long id, String drink, String owner, String table) {
+	public OrderResponseDto(Long id, String drink, String owner, long createdOn, String table) {
 		this.id = id;
 		this.drink = drink;
 		this.owner = owner;
-		this.table = table;
+		this.table = table;;
+		this.createdOn = createdOn;
 	}
 
-	public OrderResponseDto(Long id, String drink, String owner) {
-		this(id, drink, owner, null);
+	public OrderResponseDto(Long id, String drink, String owner, long createdOn) {
+		this(id, drink, owner, createdOn, null);
 	}
 }

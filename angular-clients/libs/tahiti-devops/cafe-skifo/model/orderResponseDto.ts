@@ -16,5 +16,6 @@ export interface OrderResponseDto {
     drink?: string;
     owner?: string;
     table?: string;
+    createdOn?: number;
 }
 

@@ -1,5 +1,7 @@
 package com.c4soft.meetup.openid.cafeskifo.api.domain;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -21,22 +23,25 @@ public class Order {
 	@Column(nullable = false)
 	private final String createdBy;
 
+	@Column(nullable = false)
+	private final Long createdOn;
+
 	@Column(name = "tableNbr")
 	private String table;
-
-	public Order(String drink, String createdBy) {
-		this.drink = drink;
-		this.createdBy = createdBy;
-	}
 
 	public Order(String drink, String createdBy, String table) {
 		this.drink = drink;
 		this.createdBy = createdBy;
 		this.table = table;
+		this.createdOn = new Date().getTime();
+	}
+
+	public Order(String drink, String createdBy) {
+		this(drink, createdBy, null);
 	}
 
 	protected Order() {
-		this.createdBy = null;
+		this(null, null, null);
 	}
 
 	public Long getId() {
@@ -69,9 +74,13 @@ public class Order {
 		this.table = table;
 	}
 
+	public Long getCreatedOn() {
+		return createdOn == null ? Instant.EPOCH.toEpochMilli() : createdOn;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(createdBy, drink, id, table);
+		return Objects.hash(createdBy, createdOn, drink, id, table);
 	}
 
 	@Override
@@ -83,8 +92,9 @@ public class Order {
 			return false;
 		}
 		final var other = (Order) obj;
-		return Objects.equals(createdBy, other.createdBy) && Objects.equals(drink, other.drink)
-				&& Objects.equals(id, other.id) && Objects.equals(table, other.table);
+		return Objects.equals(createdBy, other.createdBy) && Objects.equals(createdOn, other.createdOn)
+				&& Objects.equals(drink, other.drink) && Objects.equals(id, other.id)
+				&& Objects.equals(table, other.table);
 	}
 
 }

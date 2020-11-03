@@ -73,7 +73,12 @@ public class OrderController {
 	}
 
 	private static OrderResponseDto convert(Order entity) {
-		return new OrderResponseDto(entity.getId(), entity.getDrink(), entity.getCreatedBy(), entity.getTable());
+		return new OrderResponseDto(
+				entity.getId(),
+				entity.getDrink(),
+				entity.getCreatedBy(),
+				entity.getCreatedOn(),
+				entity.getTable());
 	}
 
 	private static List<OrderResponseDto> convert(Iterable<Order> entities) {

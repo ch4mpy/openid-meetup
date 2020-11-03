@@ -103,11 +103,11 @@
                 }
               ]
             },
-            "prod-mobile": {
+            "prod-android": {
               "fileReplacements": [
                 {
                   "replace": "cafe-skifo/src/environments/environment.ts",
-                  "with": "cafe-skifo/src/environments/environment.prod-mobile.ts"
+                  "with": "cafe-skifo/src/environments/environment.prod-android.ts"
                 }
               ],
               "optimization": true,
@@ -146,8 +146,8 @@
             "laptop-jerem": {
               "browserTarget": "cafe-skifo:build:laptop-jerem"
             },
-            "prod-mobile": {
-              "browserTarget": "cafe-skifo:build:prod-mobile"
+            "prod-android": {
+              "browserTarget": "cafe-skifo:build:prod-android"
             },
             "prod-web": {
               "browserTarget": "cafe-skifo:build:prod-web"
@@ -171,9 +171,9 @@
               "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:laptop-jerem",
               "devServerTarget": "cafe-skifo:serve:laptop-jerem"
             },
-            "prod-mobile": {
-              "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:prod-mobile",
-              "devServerTarget": "cafe-skifo:serve:prod-mobile"
+            "prod-android": {
+              "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:prod-android",
+              "devServerTarget": "cafe-skifo:serve:prod-android"
             },
             "prod-web": {
               "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:prod-web",
@@ -190,8 +190,8 @@
             "laptop-jerem": {
               "browserTarget": "cafe-skifo:build:laptop-jerem"
             },
-            "prod-mobile": {
-              "browserTarget": "cafe-skifo:build:prod-mobile"
+            "prod-android": {
+              "browserTarget": "cafe-skifo:build:prod-android"
             },
             "prod-web": {
               "browserTarget": "cafe-skifo:build:prod-web"

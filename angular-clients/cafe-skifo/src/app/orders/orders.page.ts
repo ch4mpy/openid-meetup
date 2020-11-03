@@ -36,6 +36,9 @@ import { OrderEditComponent } from './order-edit.component';
               <ion-col>{{ order.drink }}</ion-col>
               <ion-col>{{ order.owner }}</ion-col>
               <ion-col size="2">{{ order.table }}</ion-col>
+              <ion-col size="3">{{
+                order.creationTimeStamp | date: 'HH:mm'
+              }}</ion-col>
             </ion-item>
             <ion-item-options side="end">
               <ion-item-option color="danger" (click)="delete(order)">
@@ -97,7 +100,23 @@ export class OrdersPage {
       this.orders = await this.orderApi
         .getAll()
         .toPromise()
-        .then((dtos) => dtos.map((dto) => new Order(dto)))
+        .then((dtos) =>
+          dtos
+            .map(
+              (dto) =>
+                new Order({
+                  id: dto.id,
+                  creationTimeStamp: new Date(dto.createdOn),
+                  drink: dto.drink,
+                  owner: dto.owner,
+                  table: dto.table,
+                })
+            )
+            .sort(
+              (a, b) =>
+                a.creationTimeStamp?.getTime() - b.creationTimeStamp?.getTime()
+            )
+        )
         .catch(async (error) => {
           refresher?.complete();
           loadingElt?.dismiss();
