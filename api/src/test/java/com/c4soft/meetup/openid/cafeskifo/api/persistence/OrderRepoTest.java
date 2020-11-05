@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
-import com.c4_soft.springaddons.security.oauth2.test.annotations.IdTokenClaims;
+import com.c4_soft.springaddons.security.oauth2.test.annotations.OidcStandardClaims;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockOidcId;
 import com.c4soft.meetup.openid.cafeskifo.api.domain.Order;
 
@@ -34,8 +34,8 @@ class OrderRepoTest {
 
 	@BeforeEach
 	void setup() {
-		mojito = unsecuredRepo.save(new Order("mojito", BARMAN_SUBJECT));
-		guinness = unsecuredRepo.save(new Order("pint of Guinness", CLIENT_SUBJECT));
+		mojito = unsecuredRepo.save(new Order("mojito", BARMAN_USERNAME));
+		guinness = unsecuredRepo.save(new Order("pint of Guinness", CLIENT_USERNAME));
 	}
 
 	@Test
@@ -45,7 +45,7 @@ class OrderRepoTest {
 	}
 
 	@Test
-	@WithMockOidcId(id = @IdTokenClaims(sub = CLIENT_SUBJECT))
+	@WithMockOidcId(oidc = @OidcStandardClaims(preferredUsername = CLIENT_USERNAME))
 	void whenClientThenNoFilter() {
 		assertThat(orderRepo.findAll()).containsExactlyInAnyOrder(guinness);
 	}
@@ -58,7 +58,7 @@ class OrderRepoTest {
 	}
 
 	@Test
-	@WithMockOidcId(id = @IdTokenClaims(sub = CLIENT_SUBJECT))
+	@WithMockOidcId(oidc = @OidcStandardClaims(preferredUsername = CLIENT_USERNAME))
 	void whenClientThenCanGetGuinessOnly() {
 		assertThat(orderRepo.findById(guinness.getId())).isEqualTo(Optional.of(guinness));
 		assertThrows(AccessDeniedException.class, () -> orderRepo.findById(mojito.getId()));
@@ -72,14 +72,14 @@ class OrderRepoTest {
 	}
 
 	@Test
-	@WithMockOidcId(id = @IdTokenClaims(sub = CLIENT_SUBJECT))
+	@WithMockOidcId(oidc = @OidcStandardClaims(preferredUsername = CLIENT_USERNAME))
 	void whenClientThenCanDeleteGuinessOnly() {
 		assertDoesNotThrow(() -> orderRepo.delete(guinness));
 		assertThrows(AccessDeniedException.class, () -> orderRepo.delete(mojito));
 	}
 
-	private static final String BARMAN_SUBJECT = "51";
-	private static final String CLIENT_SUBJECT = "42";
+	private static final String BARMAN_USERNAME = "Hulk";
+	private static final String CLIENT_USERNAME = "Vickette";
 
 	@TestConfiguration
 	@EnableGlobalMethodSecurity(prePostEnabled = true)

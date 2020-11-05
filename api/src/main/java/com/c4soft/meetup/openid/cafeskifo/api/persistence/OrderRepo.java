@@ -22,22 +22,22 @@ public class OrderRepo {
 	}
 
 	// authentication.account.keycloakSecurityContext.token.subject")
-	@PostFilter("hasAuthority('BARMAN') or hasAuthority('WAITER') or filterObject.createdBy == authentication.token.subject")
+	@PostFilter("hasAuthority('BARMAN') or hasAuthority('WAITER') or filterObject.createdBy == authentication.token.preferredUsername")
 	public Iterable<Order> findAll() {
 		return this.delegate.findAll();
 	}
 
-	@PostAuthorize("hasAuthority('BARMAN') or hasAuthority('WAITER') or returnObject.orElse(null)?.createdBy == authentication.token.subject")
+	@PostAuthorize("hasAuthority('BARMAN') or hasAuthority('WAITER') or returnObject.orElse(null)?.createdBy == authentication.token.preferredUsername")
 	public Optional<Order> findById(Long id) {
 		return this.delegate.findById(id);
 	}
 
-	@PreAuthorize("hasAuthority('BARMAN') or hasAuthority('WAITER') or #entity.createdBy == authentication.token.subject")
+	@PreAuthorize("hasAuthority('BARMAN') or hasAuthority('WAITER') or #entity.createdBy == authentication.token.preferredUsername")
 	public void delete(Order entity) {
 		this.delegate.delete(entity);
 	}
 
-	@PreAuthorize("hasAuthority('BARMAN') or hasAuthority('WAITER') or #entity.createdBy == authentication.token.subject")
+	@PreAuthorize("hasAuthority('BARMAN') or hasAuthority('WAITER') or #entity.createdBy == authentication.token.preferredUsername")
 	public Order save(Order entity) {
 		return this.delegate.save(entity);
 	}
