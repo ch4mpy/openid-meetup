@@ -34,12 +34,12 @@ This is a perfect place to start playing with the Meetup show-case app.
 
 - if you followed the [step-by-step tutorial](https://stackoverflow.com/a/63874376/619830) referenced above, Keycloak should be running already, as should a DNS resolving a `[hostname]` to your machine
 - `cd api`
-- copy `src/main/resources/application-laptop-jerem.properties` to adapt SSL certificate and Keycloak host name
+- copy `src/main/resources/application-ch4mpy-bravo.properties` to adapt SSL certificate and Keycloak host name
 - edit `pom.xml` to adapt `<apiDocsUrl>` to your machine host name
 - `./mvnw integration-test` to generate OpenAPI JSON file describing public Spring API
 - `cd ../angular-clients`
 - `npm i` to install npm dependencies and generate a lib from OpenAPI JSON file generated two steps before
-- check you duplicated `laptop-jerem` entries in `angular.json` to add equivalents for your SSL certificate
+- check you duplicated `ch4mpy-bravo` entries in `angular.json` to add equivalents for your SSL certificate
 - `ionic cap sync -c=prod-android`
 - `ionic capacitor run android -l --ssl --external --public-host=[hostanme]`
 - if you want to test from an android device, check wifi settings are pointing to a DNS knowing your host name

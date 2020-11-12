@@ -6,7 +6,7 @@ import { LogLevel } from 'angular-auth-oidc-client';
 
 export const environment = {
   production: false,
-  apiBasePath: 'https://laptop-jerem:9000',
+  apiBasePath: 'https://ch4mpy-bravo:9000',
   openIdConfiguration: {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
     clientId: 'cafe-skifo',
@@ -14,13 +14,13 @@ export const environment = {
     eagerLoadAuthWellKnownEndpoints: false,
     ignoreNonceAfterRefresh: true, // Keycloak sends refresh_token with nonce
     logLevel: LogLevel.Warn,
-    postLogoutRedirectUri: 'https://laptop-jerem:8100/cafe-skifo',
-    redirectUrl: 'https://laptop-jerem:8100/cafe-skifo',
+    postLogoutRedirectUri: 'https://ch4mpy-bravo:8100/cafe-skifo',
+    redirectUrl: 'https://ch4mpy-bravo:8100/cafe-skifo',
     renewTimeBeforeTokenExpiresInSeconds: 60,
     responseType: 'code',
     scope: 'email openid offline_access roles',
     silentRenew: true,
-    // silentRenewUrl: 'https://laptop-jerem:8100/silent-renew-pkce.html',
+    // silentRenewUrl: 'https://ch4mpy-bravo:8100/silent-renew-pkce.html',
     useRefreshToken: true,
     stsServer: 'https://keycloak.devops.pf/auth/realms/meetup',
     unauthorizedRoute: '/settings',

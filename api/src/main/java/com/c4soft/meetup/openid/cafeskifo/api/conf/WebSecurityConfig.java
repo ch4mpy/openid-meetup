@@ -70,8 +70,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						.allowedOrigins(
 								"http://localhost",
 								"https://localhost",
-								"https://laptop-jerem:8100",
-								"https://laptop-jerem:4200",
+								"https://ch4mpy-bravo:8100",
+								"https://ch4mpy-bravo:4200",
 								"https://cafe-skifo.azurewebsites.net")
 						.allowedMethods("*")
 						.exposedHeaders("Origin", "Accept", "Content-Type", "Location");

@@ -65,11 +65,11 @@
             "scripts": []
           },
           "configurations": {
-            "laptop-jerem": {
+            "ch4mpy-bravo": {
               "fileReplacements": [
                 {
                   "replace": "cafe-skifo/src/environments/environment.ts",
-                  "with": "cafe-skifo/src/environments/environment.laptop-jerem.ts"
+                  "with": "cafe-skifo/src/environments/environment.ch4mpy-bravo.ts"
                 }
               ]
             },
@@ -137,14 +137,14 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "cafe-skifo:build",
-            "host": "laptop-jerem",
+            "host": "ch4mpy-bravo",
             "ssl": true,
-            "sslCert": "./laptop-jerem_self_signed.crt",
-            "sslKey": "./laptop-jerem_self_signed_key.pem"
+            "sslCert": "../../ch4mpy-bravo_self_signed.crt",
+            "sslKey": "../../ch4mpy-bravo_self_signed_key.pem"
           },
           "configurations": {
-            "laptop-jerem": {
-              "browserTarget": "cafe-skifo:build:laptop-jerem"
+            "ch4mpy-bravo": {
+              "browserTarget": "cafe-skifo:build:ch4mpy-bravo"
             },
             "prod-android": {
               "browserTarget": "cafe-skifo:build:prod-android"
@@ -167,9 +167,9 @@
             "devServerTarget": "cafe-skifo:serve"
           },
           "configurations": {
-            "laptop-jerem": {
-              "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:laptop-jerem",
-              "devServerTarget": "cafe-skifo:serve:laptop-jerem"
+            "ch4mpy-bravo": {
+              "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:ch4mpy-bravo",
+              "devServerTarget": "cafe-skifo:serve:ch4mpy-bravo"
             },
             "prod-android": {
               "cordovaBuildTarget": "cafe-skifo:ionic-cordova-build:prod-android",
@@ -187,8 +187,8 @@
             "browserTarget": "cafe-skifo:build"
           },
           "configurations": {
-            "laptop-jerem": {
-              "browserTarget": "cafe-skifo:build:laptop-jerem"
+            "ch4mpy-bravo": {
+              "browserTarget": "cafe-skifo:build:ch4mpy-bravo"
             },
             "prod-android": {
               "browserTarget": "cafe-skifo:build:prod-android"

@@ -34,7 +34,7 @@
             <action android:name="android.intent.action.VIEW"/>
             <category android:name="android.intent.category.DEFAULT"/>
             <category android:name="android.intent.category.BROWSABLE"/>
-            <data android:scheme="https" android:host="laptop-jerem" android:port="8100" android:path="/cafe-skifo"/>
+            <data android:scheme="https" android:host="ch4mpy-bravo" android:port="8100" android:path="/cafe-skifo"/>
           </intent-filter>
 
         </activity>
