@@ -30,7 +30,7 @@ import { Configuration }                                     from '../configurat
 })
 export class OrderControllerRestClient {
 
-    protected basePath = 'http://localhost:9080';
+    protected basePath = 'https://bravo-ch4mp:4443';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;

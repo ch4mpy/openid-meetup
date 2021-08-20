@@ -4,14 +4,6 @@
   "description": "app to order drinks",
   "author": "ch4mp@c4-soft.com",
   "dependencies": {
-    "@capacitor/android": "^2.4.0",
-    "@capacitor/core": "2.4.0",
-    "@capacitor/ios": "^2.4.2",
-    "@ch4mpy/ng-bt-scan": "^1.0.0",
-    "@ionic-native/core": "^5.27.0",
-    "@ionic-native/deeplinks": "^5.27.0",
-    "@ionic/storage": "^2.3.1",
-    "ionic-plugin-deeplinks": "^1.0.20"
   },
   "devDependencies": {
     "@capacitor/cli": "2.4.0",
