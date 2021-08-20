@@ -11,6 +11,7 @@ export class SettingsService {
   ) {}
 
   async init() {
+    await this.storage.create();
     const configuredOrderApiBasePath = await this.storage.get(
       SettingsService.API_BASE_PATH_KEY
     );

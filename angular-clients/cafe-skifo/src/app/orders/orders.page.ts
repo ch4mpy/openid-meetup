@@ -1,6 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, EventEmitter, NgZone } from '@angular/core';
-import { BtScanService } from '@ch4mpy/ng-bt-scan';
 import {
   AlertController,
   IonRefresher,
@@ -72,16 +71,11 @@ export class OrdersPage {
     private popCtrl: PopoverController,
     private alertController: AlertController,
     private zone: NgZone,
-    private btScan: BtScanService,
     private loadingController: LoadingController
   ) {}
 
   async ionViewWillEnter() {
     this.loadOrders();
-
-    this.scanSubscription = this.btScan.barcode$.subscribe((barcode) =>
-      this.popOrderEdit(barcode)
-    );
   }
 
   ionViewWillLeave() {

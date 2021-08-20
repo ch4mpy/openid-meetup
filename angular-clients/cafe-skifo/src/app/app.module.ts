@@ -6,10 +6,9 @@ import {
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { BtScanModule } from '@ch4mpy/ng-bt-scan';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { IonicModule, IonicRouteStrategy, Platform } from '@ionic/angular';
-import { IonicStorageModule } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage-angular';
 import {
   ApiModule as BarApi,
   OrderControllerRestClient,
@@ -40,11 +39,6 @@ export function init(
   declarations: [AppComponent],
   imports: [
     AuthModule.forRoot(),
-    BtScanModule.forRoot({
-      barcodePrefix: '$can$',
-      barcodeSuffix: 'Enter',
-      keysCapturePeriod: 1500,
-    }),
     BarApi,
     BrowserModule,
     HttpClientModule,

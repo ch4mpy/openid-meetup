@@ -6,23 +6,23 @@ import { LogLevel } from 'angular-auth-oidc-client';
 
 export const environment = {
   production: false,
-  apiBasePath: 'https://ch4mpy-bravo:9000',
+  apiBasePath: 'https://bravo-ch4mp:9000',
   openIdConfiguration: {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
-    clientId: 'cafe-skifo',
+    clientId: 'PLJO8P148QjTwkbNUy8BhCVcpFmLqXtG',
     forbiddenRoute: '/settings',
     eagerLoadAuthWellKnownEndpoints: false,
     ignoreNonceAfterRefresh: true, // Keycloak sends refresh_token with nonce
     logLevel: LogLevel.Warn,
-    postLogoutRedirectUri: 'https://ch4mpy-bravo:8100/cafe-skifo',
-    redirectUrl: 'https://ch4mpy-bravo:8100/cafe-skifo',
+    postLogoutRedirectUri: 'https://bravo-ch4mp:8100',
+    redirectUrl: 'https://bravo-ch4mp:8100',
     renewTimeBeforeTokenExpiresInSeconds: 60,
     responseType: 'code',
     scope: 'email openid offline_access roles',
     silentRenew: true,
-    // silentRenewUrl: 'https://ch4mpy-bravo:8100/silent-renew-pkce.html',
+    // silentRenewUrl: 'https://bravo-ch4mp:8100/silent-renew-pkce.html',
     useRefreshToken: true,
-    stsServer: 'https://keycloak.devops.pf/auth/realms/meetup',
+    stsServer: 'https://dev-ch4mpy.eu.auth0.com',
     unauthorizedRoute: '/settings',
   },
 };

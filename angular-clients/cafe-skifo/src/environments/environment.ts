@@ -5,20 +5,20 @@ export const environment = {
   apiBasePath: 'https://cafe-skifo.azurewebsites.net',
   openIdConfiguration: {
     // https://github.com/damienbod/angular-auth-oidc-client/blob/master/docs/configuration.md
-    clientId: 'cafe-skifo',
+    clientId: 'PLJO8P148QjTwkbNUy8BhCVcpFmLqXtG',
     forbiddenRoute: '/settings',
     eagerLoadAuthWellKnownEndpoints: false,
     ignoreNonceAfterRefresh: true, // Keycloak sends refresh_token with nonce
     logLevel: LogLevel.Warn,
-    postLogoutRedirectUri: 'com.c4-soft://device/cafe-skifo',
-    redirectUrl: 'com.c4-soft://device/cafe-skifo',
+    postLogoutRedirectUri: 'device://starter',
+    redirectUrl: 'device://starter',
     renewTimeBeforeTokenExpiresInSeconds: 10,
     responseType: 'code',
     scope: 'email openid offline_access roles',
     silentRenew: true,
     // silentRenewUrl: 'com.c4soft.mobileapp://cafe-skifo/silent-renew-pkce.html',
     useRefreshToken: true,
-    stsServer: 'https://keycloak.devops.pf/auth/realms/meetup',
+    stsServer: 'https://dev-ch4mpy.eu.auth0.com',
     unauthorizedRoute: '/settings',
   },
 };
