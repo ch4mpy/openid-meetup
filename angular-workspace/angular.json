@@ -1,0 +1,158 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  },
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "cafe-skifo": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineTemplate": true,
+          "inlineStyle": true,
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/cafe-skifo",
+      "sourceRoot": "projects/cafe-skifo/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/cafe-skifo",
+            "index": "projects/cafe-skifo/src/index.html",
+            "main": "projects/cafe-skifo/src/main.ts",
+            "polyfills": "projects/cafe-skifo/src/polyfills.ts",
+            "tsConfig": "projects/cafe-skifo/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/cafe-skifo/src/favicon.ico",
+              "projects/cafe-skifo/src/assets",
+              { "glob": "**/*.svg", "input": "projects/cafe-skifo/node_modules/ionicons/dist/ionicons/svg", "output": "./svg" }
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/cafe-skifo/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/cafe-skifo/src/environments/environment.ts",
+                  "with": "projects/cafe-skifo/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "cafe-skifo:build:production"
+            },
+            "development": {
+              "browserTarget": "cafe-skifo:build:development"
+            },
+            "bravo-ch4mp": {
+              "browserTarget": "cafe-skifo:build:development",
+              "host": "bravo-ch4mp",
+              "ssl": true,
+              "sslCert": "C:/Users/ch4mp/.ssh/bravo-ch4mp_self_signed.crt",
+              "sslKey": "C:/Users/ch4mp/.ssh/bravo-ch4mp_req_key.pem"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "cafe-skifo:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/cafe-skifo/src/test.ts",
+            "polyfills": "projects/cafe-skifo/src/polyfills.ts",
+            "tsConfig": "projects/cafe-skifo/tsconfig.spec.json",
+            "karmaConfig": "projects/cafe-skifo/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/cafe-skifo/src/favicon.ico",
+              "projects/cafe-skifo/src/assets",
+              { "glob": "**/*.svg", "input": "projects/cafe-skifo/node_modules/ionicons/dist/ionicons/svg", "output": "./svg" }
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/cafe-skifo/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "@c4-soft/orders-endpoint": {
+      "projectType": "library",
+      "root": "projects/c4-soft/orders-endpoint",
+      "sourceRoot": "projects/c4-soft/orders-endpoint/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/c4-soft/orders-endpoint/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/c4-soft/orders-endpoint/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/c4-soft/orders-endpoint/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/c4-soft/orders-endpoint/src/test.ts",
+            "tsConfig": "projects/c4-soft/orders-endpoint/tsconfig.spec.json",
+            "karmaConfig": "projects/c4-soft/orders-endpoint/karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "cafe-skifo"
+}

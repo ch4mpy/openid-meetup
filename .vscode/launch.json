@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SampleApi<orders-endpoint>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.c4_soft.cafe_skifo.SampleApi",
+            "projectName": "orders-endpoint",
+            "args": ""
+        }
+    ]
+}

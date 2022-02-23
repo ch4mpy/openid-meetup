@@ -1,16 +1,10 @@
 Support project for a Meetup about a sample OpenID "full" stack composed of:
 
-- Keycloak as authorization-server
+- Keycloak or Auth0 as authorization-server
 - Spring RESTfull API as resource-server
 - Ionic-Angular Web & Android app as client
 
 Meetup slides are accessible [from there](https://drive.google.com/file/d/1BVw5y3nAh9aU2n0q4isGCl5kM3HclsqR/view?usp=sharing) for more background info.
-
-## CI up and running!
-
-A Github action builds both the Angular app and Spring API, and then deploys it on Azure at https://cafe-skifo.azurewebsites.net.
-
-This is a perfect place to start playing with the Meetup show-case app.
 
 ## Android app on Google Play
 
@@ -40,6 +34,6 @@ This is a perfect place to start playing with the Meetup show-case app.
 - `cd ../angular-clients`
 - `npm i` to install npm dependencies and generate a lib from OpenAPI JSON file generated two steps before
 - check you duplicated `ch4mpy-bravo` entries in `angular.json` to add equivalents for your SSL certificate
-- `ionic cap sync -c=prod-android`
+- `ionic cap sync`
 - `ionic capacitor run android -l --ssl --external --public-host=[hostanme]`
 - if you want to test from an android device, check wifi settings are pointing to a DNS knowing your host name

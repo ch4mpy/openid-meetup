@@ -1,0 +1,13 @@
+{
+  "projects": {
+    "cafe-skifo": {
+      "name": "cafe-skifo",
+      "integrations": {
+        "capacitor": {}
+      },
+      "type": "angular",
+      "root": ""
+    }
+  },
+  "defaultProject": "cafe-skifo"
+}

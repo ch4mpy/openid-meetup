@@ -47,7 +47,7 @@ class SecuredOrderRepositoryTest {
 	}
 
 	@Test
-	@WithMockOidcAuth(claims = @OpenIdClaims(preferredUsername = CLIENT_USERNAME))
+	@WithMockOidcAuth(claims = @OpenIdClaims(sub = CLIENT_USERNAME))
 	void whenClientThenNoFilter() {
 		assertThat(orderRepo.findAll()).containsExactlyInAnyOrder(guinness);
 	}
@@ -60,7 +60,7 @@ class SecuredOrderRepositoryTest {
 	}
 
 	@Test
-	@WithMockOidcAuth(claims = @OpenIdClaims(preferredUsername = CLIENT_USERNAME))
+	@WithMockOidcAuth(claims = @OpenIdClaims(sub = CLIENT_USERNAME))
 	void whenClientThenCanGetGuinessOnly() {
 		assertThat(orderRepo.findById(guinness.getId())).isEqualTo(Optional.of(guinness));
 		assertThrows(AccessDeniedException.class, () -> orderRepo.findById(mojito.getId()));
@@ -74,7 +74,7 @@ class SecuredOrderRepositoryTest {
 	}
 
 	@Test
-	@WithMockOidcAuth(claims = @OpenIdClaims(preferredUsername = CLIENT_USERNAME))
+	@WithMockOidcAuth(claims = @OpenIdClaims(sub = CLIENT_USERNAME))
 	void whenClientThenCanDeleteGuinessOnly() {
 		assertDoesNotThrow(() -> orderRepo.delete(guinness));
 		assertThrows(AccessDeniedException.class, () -> orderRepo.delete(mojito));
